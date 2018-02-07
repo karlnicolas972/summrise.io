@@ -1,0 +1,9 @@
+<h1>This is the books directory!</h1>
+
+<ul>
+  <% books.forEach(function(book) { %>
+      <li>
+        <strong><%= book.title %></strong> - <%= book.author %>
+      </li>
+  <% }) %>
+</ul>
