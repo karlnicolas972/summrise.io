@@ -1,0 +1,25 @@
+{
+  "name": "summrise.io",
+  "version": "1.0.0",
+  "description": "A book summary web app intended to help users retain the information gained from reading books by rewriting their own summaries of each of the book's chapters.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karlnicolas972/summrise.io.git"
+  },
+  "keywords": [
+    "Book",
+    "Book",
+    "summary",
+    "Summary"
+  ],
+  "author": "Karl Nicolas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karlnicolas972/summrise.io/issues"
+  },
+  "homepage": "https://github.com/karlnicolas972/summrise.io#readme"
+}
