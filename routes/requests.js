@@ -38,4 +38,15 @@ router.post("/", (req, res) => {
   }
 });
 
+router.delete("/:request_id", (req, res) => {
+  BookRequest.findByIdAndRemove(req.params.request_id, function(err) {
+    if (err) {
+      console.log(err);
+      res.redirect("back");
+    } else {
+      res.redirect("/books/request/all");
+    }
+  });
+});
+
 module.exports = router;

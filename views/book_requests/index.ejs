@@ -1,7 +1,7 @@
 <% include ../partials/header %>
 
 <div class="ui main container">
-  <div class="ui cards">
+  <div class="ui four cards">
     <% requests.forEach(function(request) { %>
       <div class="card">
         <div class="content">
@@ -13,9 +13,13 @@
           </div>
         </div>
         <div class="extra content">
-          <div class="ui two buttons">
-            <a href="/books/new/<%= request._id %>" class="ui basic green button">Add to database</a>
-            <a href="#" class="ui basic red button">Delete request</a>
+          <div class="ui buttons">
+            <div>
+              <a href="/books/new/<%= request._id %>" class="ui basic green button">Add to database</a>
+            </div>
+            <form action="/books/request/<%= request._id %>?_method=DELETE" method="POST">
+              <button class="ui basic red button delete-btn">Delete request</button>
+            </form>
           </div>
         </div>
       </div>

@@ -2,3 +2,7 @@
 	margin-top: 5.0em;
 	margin-bottom: 5.0em;
 }
+
+.delete-btn {
+	display: inline-block;
+}

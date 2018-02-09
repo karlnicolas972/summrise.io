@@ -3,6 +3,7 @@ var express = require("express");
 var app = express();
 var mongoose = require("mongoose");
 var Book = require("./models/book");
+var methodOverride = require("method-override");
 var port = process.env.PORT || 9720;
 var databaseURL = process.env.DATABASEURL || "mongodb://localhost/summrise";
 
@@ -16,6 +17,7 @@ mongoose.connect(databaseURL);
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 app.use(indexRoutes);
 app.use("/books/request", bookRequestRoutes);

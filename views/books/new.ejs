@@ -6,7 +6,7 @@
     <h1>Add a new book</h1>
   </div>
 
-  <form class="ui form" action="/books" method="POST">
+  <form class="ui form" action="/books/new/<%= request._id %>" method="POST">
     <div class="field">
       <label for="title">Title:</label>
       <input type="text" name="title" value="<%= request.title %>">

@@ -3,6 +3,7 @@ var router = express.Router();
 var Book = require("../models/book");
 var BookRequest = require("../models/request");
 
+
 // index route
 router.get("/", (req, res) => {
   Book.find({}, function(err, foundBooks) {
@@ -32,7 +33,7 @@ router.get("/new/:request_id", (req, res) => {
 
 // create route
 // only admins can create a new book
-router.post("/", (req, res) => {
+router.post("/new/:request_id", (req, res) => {
   if (req.body.title && req.body.coverImage && req.body.author) {
     var newBook = {
       title: req.body.title,
@@ -44,7 +45,14 @@ router.post("/", (req, res) => {
         console.log(err);
         res.redirect("back");
       } else {
-        res.redirect("books");
+        BookRequest.findByIdAndRemove(req.params.request_id, function(err) {
+          if (err) {
+            console.log(err);
+            res.redirect("back");
+          } else {
+            res.redirect("/books/");
+          }
+        });
       }
     });
   } else {
