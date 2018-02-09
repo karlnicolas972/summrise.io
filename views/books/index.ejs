@@ -15,21 +15,29 @@
   <div class="ui centered grid">
     <% books.forEach(function(book) { %>
     <div class="thirteen wide mobile eight wide tablet four wide computer column">
-      <a href="/books/<%= book._id %>">
-        <div class="ui card">
-          <div class="image">
-            <img src="<%= book.coverImage %>" alt="<%= book.title %>">
-          </div>
-          <div class="content">
-            <div class="header">
-              <%= book.title %>
-            </div>
-            <div class="meta">
-              By <%= book.author %>
-            </div>
+      <div class="ui card">
+        <a href="books/<%= book._id %>" class="image">
+          <img src="<%= book.coverImage %>" alt="<%= book.title %>">
+        </a>
+        <div class="content">
+          <a href="books/<%= book._id %>" class="header">
+            <%= book.title %>
+          </a>
+          <div class="meta">
+            By <%= book.author %>
           </div>
         </div>
-      </a>
+        <div class="extra content">
+          <div class="ui buttons">
+            <div>
+              <a href="#" class="ui basic blue button">Edit Book</a>
+            </div>
+            <form action="#" method="POST">
+              <button class="ui basic red button delete-btn">Delete Book</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
     <% }); %>
   </div>
@@ -37,3 +45,14 @@
 </div>
 
 <% include ../partials/footer %>
+
+<div class="extra content">
+  <div class="ui buttons">
+    <div>
+      <a href="#" class="ui basic blue button">Edit Book</a>
+    </div>
+    <form action="#" method="POST">
+      <button class="ui basic red button delete-btn">Delete Book</button>
+    </form>
+  </div>
+</div>
