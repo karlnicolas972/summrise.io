@@ -2,29 +2,33 @@
 
 <div class="ui main container">
   <div class="ui huge header">
-    <h1>This is the books directory!</h1>
+    <h1>View your books</h1>
   </div>
 
-  <div class="ui top attached segment">
-    <div class="ui divided items">
-      <% books.forEach(function(book) { %>
-        <div class="item">
-          <div class="image">
-            <img src="<%= book.coverImage %>">
+  <a href="/books/new" class="ui green button">Add a new book!</a>
+
+  <br>
+  <br>
+
+  <div class="ui four column grid">
+    <% books.forEach(function(book) { %>
+      <div class="column">
+        <a href="#">
+          <div class="ui segment">
+            <div class="ui medium center aligned image">
+              <img src="<%= book.coverImage %>">
+            </div>
+            <hr>
+            <div class="ui center aligned content">
+              <div class="ui big header"><%= book.title %></div>
+              <span>By <%= book.author %></span>
+            </div>
           </div>
-          <div class="content">
-            <a class="header" href="#"><%= book.title %></a>
-          </div>
-          <div class="meta left">
-            <span>By <%= book.author %></span>
-          </div>
-        </div>
-      <% }) %>
-    </div>
+        </a>
+      </div>
+    <% }); %>
   </div>
 
 </div>
-
-
 
 <% include ../partials/footer %>
