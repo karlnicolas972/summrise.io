@@ -39,6 +39,7 @@ router.post("/new/:request_id", (req, res) => {
       title: req.body.title,
       coverImage: req.body.coverImage,
       author: req.body.author,
+      description: req.body.description,
     };
     Book.create(newBook, function(err, createdBook) {
       if (err) {
@@ -68,6 +69,40 @@ router.get("/:id", (req, res) => {
     } else {
       res.render("books/show", { book: foundBook });
     }
+  });
+});
+
+// edit route
+router.get("/:id/edit", (req, res) => {
+  Book.findById(req.params.id, function(err, foundBook) {
+    if (err) {
+      console.log(err);
+      res.redirect("back");
+    } else {
+      res.render("books/edit", { book: foundBook });
+    }
+  });
+});
+
+// update route
+router.put("/:id", (req, res) => {
+  Book.findByIdAndUpdate(req.params.id, req.body.book, function(err, updatedBook) {
+    if (err || !updatedBook) {
+      console.log(err);
+      res.redirect("back");
+    } else {
+      res.redirect("/books/")
+    }
+  });
+});
+
+router.delete("/:id", (req, res) => {
+  // delete all the chapters associated with the book
+  Book.findByIdAndRemove(req.params.id, function(err) {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect("/books/");
   });
 });
 

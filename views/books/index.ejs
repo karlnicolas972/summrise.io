@@ -6,8 +6,9 @@
     <div class="ui huge header">
       <h1>Available Books</h1>
     </div>
-    <p>Here is the collection of the books in our database. Want to write a chapter summary for a book that isn't there? Request a new book using the link below.</p>
+    <p>Here is the collection of books in our database. Want to write a chapter summary for a book that isn't here? Request a new book using the link below.</p>
     <a href="/books/request" class="ui green button">Request a new book!</a>
+    <a href="/books/request/all" class="ui blue button">View pending requests</a>
   </div>
 
   <br>
@@ -30,10 +31,10 @@
         <div class="extra content">
           <div class="ui buttons">
             <div>
-              <a href="#" class="ui basic blue button">Edit Book</a>
+              <a href="/books/<%= book._id %>/edit" class="ui blue basic button">Edit Book</a>
             </div>
-            <form action="#" method="POST">
-              <button class="ui basic red button delete-btn">Delete Book</button>
+            <form class="delete-btn" action="/books/<%= book._id %>?_method=DELETE" method="POST">
+              <button class="ui red basic button">Delete Book</button>
             </form>
           </div>
         </div>
@@ -45,14 +46,3 @@
 </div>
 
 <% include ../partials/footer %>
-
-<div class="extra content">
-  <div class="ui buttons">
-    <div>
-      <a href="#" class="ui basic blue button">Edit Book</a>
-    </div>
-    <form action="#" method="POST">
-      <button class="ui basic red button delete-btn">Delete Book</button>
-    </form>
-  </div>
-</div>
