@@ -23,12 +23,14 @@
   },
   "homepage": "https://github.com/karlnicolas972/summrise.io#readme",
   "dependencies": {
+    "atob": "^2.0.3",
     "connect-flash": "^0.1.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "method-override": "^2.3.10",
     "mongoose": "^5.0.3",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "semantic-ui": "^2.2.14"
   }
 }
