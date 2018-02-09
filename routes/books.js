@@ -42,7 +42,11 @@ router.post("/", (req, res) => {
 // show route
 router.get("/:id", function(req, res) {
   Book.findById(req.params.id, function(err, foundBook) {
-
+    if (err || !foundBook) {
+      res.redirect("back");
+    } else {
+      res.render("books/show", { book: foundBook });
+    }
   });
 });
 
