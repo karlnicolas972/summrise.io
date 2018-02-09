@@ -39,4 +39,11 @@ router.post("/", (req, res) => {
   }
 });
 
+// show route
+router.get("/:id", function(req, res) {
+  Book.findById(req.params.id, function(err, foundBook) {
+
+  });
+});
+
 module.exports = router;

@@ -1,31 +1,38 @@
 <% include ../partials/header %>
 
 <div class="ui main container">
-  <div class="ui huge header">
-    <h1>View your books</h1>
+
+  <div class="computer only row">
+    <div class="ui message">
+      <div class="ui huge header">
+        <h1>View your books</h1>
+      </div>
+      <p>Here is the collection of the books you've added. To add more, click the link below.</p>
+      <a href="/books/new" class="ui green button">Add a new book!</a>
+    </div>
   </div>
 
-  <a href="/books/new" class="ui green button">Add a new book!</a>
-
-  <br>
   <br>
 
-  <div class="ui four column grid">
+  <div class="ui centered grid">
     <% books.forEach(function(book) { %>
-      <div class="column">
-        <a href="#">
-          <div class="ui segment">
-            <div class="ui medium center aligned image">
-              <img src="<%= book.coverImage %>">
+    <div class="thirteen wide mobile eight wide tablet four wide computer column">
+      <a href="/books/<%= book._id %>">
+        <div class="ui card">
+          <div class="image">
+            <img src="<%= book.coverImage %>" alt="<%= book.title %>">
+          </div>
+          <div class="content">
+            <div class="header">
+              <%= book.title %>
             </div>
-            <hr>
-            <div class="ui center aligned content">
-              <div class="ui big header"><%= book.title %></div>
-              <span>By <%= book.author %></span>
+            <div class="meta">
+              By <%= book.author %>
             </div>
           </div>
-        </a>
-      </div>
+        </div>
+      </a>
+    </div>
     <% }); %>
   </div>
 
