@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+
+<div class="ui main container">
+
+  <div class="ui huge header">
+    <h1>Request a new book</h1>
+  </div>
+
+  <form class="ui form" action="/books/request" method="POST">
+    <div class="field">
+      <label for="title">Title:</label>
+      <input type="text" name="title" placeholder="Title">
+    </div>
+    <div class="field">
+      <label for="author">Author:</label>
+      <input type="text" name="author" placeholder="Author">
+    </div>
+    <button class="ui button">Request this book!</button>
+  </form>
+
+</div>
+
+<% include ../partials/footer %>

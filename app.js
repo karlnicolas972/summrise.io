@@ -9,6 +9,7 @@ var databaseURL = process.env.DATABASEURL || "mongodb://localhost/summrise";
 // routes
 var indexRoutes = require("./routes/index");
 var bookRoutes = require("./routes/books");
+var bookRequestRoutes = require("./routes/requests");
 
 // app config
 mongoose.connect(databaseURL);
@@ -17,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
 app.use(indexRoutes);
+app.use("/books/request", bookRequestRoutes);
 app.use("/books", bookRoutes);
+
 
 app.listen(port, () => console.log("summrise.io server active at port " + port));

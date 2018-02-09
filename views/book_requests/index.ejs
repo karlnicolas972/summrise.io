@@ -1,0 +1,26 @@
+<% include ../partials/header %>
+
+<div class="ui main container">
+  <div class="ui cards">
+    <% requests.forEach(function(request) { %>
+      <div class="card">
+        <div class="content">
+          <div class="ui huge header">
+            <%= request.title %>
+          </div>
+          <div class="meta">
+            By <%= request.author %>
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <a href="/books/new/<%= request._id %>" class="ui basic green button">Add to database</a>
+            <a href="#" class="ui basic red button">Delete request</a>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
+<% include ../partials/footer %>

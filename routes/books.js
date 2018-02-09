@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Book = require("../models/book");
+var BookRequest = require("../models/request");
 
 // index route
 router.get("/", (req, res) => {
@@ -15,9 +16,22 @@ router.get("/", (req, res) => {
 });
 
 // new route
-router.get("/new", (req, res) => res.render("books/new"));
+// takes a book request and asks for more information from admins
+// before a book is added to the database
+// only admins can create a new book
+router.get("/new/:request_id", (req, res) => {
+  BookRequest.findById(req.params.request_id, function(err, foundRequest) {
+    if (err || !foundRequest) {
+      console.log(err);
+      res.redirect("back");
+    } else {
+      res.render("books/new", { request: foundRequest });
+    }
+  });
+});
 
 // create route
+// only admins can create a new book
 router.post("/", (req, res) => {
   if (req.body.title && req.body.coverImage && req.body.author) {
     var newBook = {
@@ -30,7 +44,6 @@ router.post("/", (req, res) => {
         console.log(err);
         res.redirect("back");
       } else {
-        console.log(createdBook);
         res.redirect("books");
       }
     });
@@ -40,7 +53,7 @@ router.post("/", (req, res) => {
 });
 
 // show route
-router.get("/:id", function(req, res) {
+router.get("/:id", (req, res) => {
   Book.findById(req.params.id, function(err, foundBook) {
     if (err || !foundBook) {
       res.redirect("back");
