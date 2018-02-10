@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Book = require("../models/book");
 var BookRequest = require("../models/request");
+var Chapter = require("../models/chapter");
 
 
 // index route
@@ -63,7 +64,7 @@ router.post("/new/:request_id", (req, res) => {
 
 // show route
 router.get("/:id", (req, res) => {
-  Book.findById(req.params.id, function(err, foundBook) {
+  Book.findById(req.params.id).populate("chapters").exec(function(err, foundBook) {
     if (err || !foundBook) {
       res.redirect("back");
     } else {

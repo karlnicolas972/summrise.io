@@ -5,10 +5,10 @@ var bookSchema = new mongoose.Schema({
   coverImage: String, // meant to be a url to the image
   author: String,
   description: String,
-  // chapters: [{
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "Chapter"
-  // }]
+  chapters: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Chapter"
+  }]
 });
 
 module.exports = mongoose.model("Book", bookSchema);

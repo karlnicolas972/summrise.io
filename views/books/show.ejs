@@ -1,7 +1,24 @@
 <% include ../partials/header %>
 
 <div class="ui main container">
-  <h1>Show page for <%= book.title %></h1>
+  <h1><%= book.title %></h1>
+  <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
+
+  <br>
+  <br>
+
+  <div class="ui four cards">
+    <% book.chapters.forEach(function(chapter) { %>
+      <div class="card">
+        <div class="content">
+          <a class="header" href="#">Chapter <%= chapter.number %> - <%= chapter.title %></a>
+          <br>
+          <a class="description" href="#"><%= chapter.summary.substring(0, 250) %>...</a>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+
 </div>
 
 <% include ../partials/footer %>
