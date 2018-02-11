@@ -1,7 +1,42 @@
 <% include ./partials/header %>
 
 <div class="ui main container">
-  <h4 class="ui dividing header"></h4>
+  <div class="ui middle aligned center aligned grid">
+    <div class="left aligned column user-form">
+      <h1 class="ui center aligned huge header">
+        <div class="content">
+          Sign up to Summrise
+        </div>
+      </h1>
+      <form class="ui large form" method="POST" action="/register">
+        <div class="ui segment">
+          <div class="two fields">
+            <div class="field">
+              <label for="firstName">First name:</label>
+              <input type="text" name="firstName" placeholder="First Name">
+            </div>
+            <div class="field">
+              <label for="lastName">Last name:</label>
+              <input type="text" name="lastName" placeholder="Last Name">
+            </div>
+          </div>
+          <div class="field">
+            <label for="username">Username:</label>
+            <input type="text" name="username"  placeholder="Username">
+          </div>
+          <div class="field">
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Password">
+          </div>
+          <input class="ui fluid button" type="submit" value="Sign-up!">
+        </div>
+      </form>
+
+      <div class="ui message">
+        Already have an account?  <a href="/login">Log-in</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <% include ./partials/footer %>
