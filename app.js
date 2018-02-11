@@ -2,9 +2,11 @@
 var express = require("express");
 var app = express();
 var mongoose = require("mongoose");
-var Book = require("./models/book");
 var methodOverride = require("method-override");
 // var flash = require("connect-flash");
+var User = require("./models/user");
+var passport = require("passport");
+var LocalStrategy = require("passport-local");
 var port = process.env.PORT || 9720;
 var databaseURL = process.env.DATABASEURL || "mongodb://localhost/summrise";
 
@@ -21,6 +23,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 // app.use(flash());
+
+// passport config
+app.use(require("express-session")({
+  secret: "08Q75cVh9f1M59gcBl87AnTEKr1nlJ0TAh9ljEKI957BgJjxg0zz5dKs3rbaTolm",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 // global middleware
 // app.use(function(req, res, next) {

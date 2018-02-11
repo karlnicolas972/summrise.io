@@ -15,6 +15,16 @@
           <br>
           <a class="description" href="#"><%= chapter.summary.substring(0, 250) %>...</a>
         </div>
+        <div class="extra content">
+          <div class="ui buttons">
+            <div>
+              <a href="/books/<%= book._id %>/chapters/<%= chapter._id %>/edit" class="ui blue basic button">Edit Chapter</a>
+            </div>
+            <form class="delete-btn" action="/books/<%= book._id %>/chapters/<%= chapter._id %>?_method=DELETE" method="POST">
+              <button class="ui red basic right floated button">Delete Chapter</button>
+            </form>
+          </div>
+        </div>
       </div>
     <% }); %>
   </div>
