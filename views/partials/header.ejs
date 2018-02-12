@@ -12,11 +12,12 @@
   <div class="ui container">
     <a href="/" class="header item"><i class="cubes icon"></i>Summrise.io</a>
     <a href="/books" class="header item"><i class="book icon"></i>Books</a>
+    <a href="#" class="header item"><i class="browser icon"></i>Blog</a>
     <div class="right menu">
       <% if (currentUser) { %>
         <span class="header item"><i class="user outline icon"></i> Logged in as: <%= currentUser.username %> </span>
         <% if (currentUser.isAdmin) { %>
-        <a href="/register" class="header item"><i class="add user icon"></i>Add a new user</a>
+        <a href="/register" class="header item"><i class="add user icon"></i>Add new user</a>
         <% } %>
         <a href="/logout" class="header item"><i class="remove user icon"></i>Log-out</a>
       <% } else { %>

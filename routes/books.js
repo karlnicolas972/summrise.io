@@ -3,6 +3,7 @@ var router = express.Router();
 var Book = require("../models/book");
 var BookRequest = require("../models/request");
 var Chapter = require("../models/chapter");
+var middleware = require("../middleware");
 
 
 // index route
@@ -21,7 +22,7 @@ router.get("/", (req, res) => {
 // takes a book request and asks for more information from admins
 // before a book is added to the database
 // only admins can create a new book
-router.get("/new/:request_id", (req, res) => {
+router.get("/new/:request_id", middleware.checkAdmin, (req, res) => {
   BookRequest.findById(req.params.request_id, function(err, foundRequest) {
     if (err || !foundRequest) {
       req.flash("error", "This request does not exist!")
@@ -34,7 +35,7 @@ router.get("/new/:request_id", (req, res) => {
 
 // create route
 // only admins can create a new book
-router.post("/new/:request_id", (req, res) => {
+router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
   if (req.body.title && req.body.coverImage && req.body.author && req.body.description) {
     var newBook = {
       title: req.body.title,
@@ -76,7 +77,7 @@ router.get("/:id", (req, res) => {
 });
 
 // edit route
-router.get("/:id/edit", (req, res) => {
+router.get("/:id/edit", middleware.checkAdmin, (req, res) => {
   Book.findById(req.params.id, function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
@@ -88,7 +89,7 @@ router.get("/:id/edit", (req, res) => {
 });
 
 // update route
-router.put("/:id", (req, res) => {
+router.put("/:id", middleware.checkAdmin, (req, res) => {
   Book.findByIdAndUpdate(req.params.id, req.body.book, function(err, updatedBook) {
     if (err || !updatedBook) {
       req.flash("error", "This book does not exist!");
@@ -99,7 +100,7 @@ router.put("/:id", (req, res) => {
   });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", middleware.checkAdmin, (req, res) => {
   // delete all the chapters associated with the book
   Book.findByIdAndRemove(req.params.id, function(err) {
     if (err) {

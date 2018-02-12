@@ -2,11 +2,12 @@ var express = require("express");
 var router = express.Router({ mergeParams: true });
 var Book = require("../models/book");
 var Chapter = require("../models/chapter");
+var middleware = require("../middleware");
 
 // index route - show page for a book
 
 // new route
-router.get("/new", (req, res) => {
+router.get("/new", middleware.isLoggedIn, (req, res) => {
   Book.findById(req.params.id, function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
@@ -18,7 +19,7 @@ router.get("/new", (req, res) => {
 });
 
 // create route
-router.post("/", (req, res) => {
+router.post("/", middleware.isLoggedIn, (req, res) => {
   var newChapter = {
     number: req.body.number,
     title: req.body.title,
