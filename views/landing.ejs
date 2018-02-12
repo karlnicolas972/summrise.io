@@ -1,7 +1,22 @@
-<% include ./partials/header %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Summrise.io - Create Your Own Book Summaries</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+  <link rel="stylesheet" href="/stylesheets/landing.css">
+</head>
+<body id="for-background">
 
 <div class="ui main container">
-  <h1>This is the landing page!!</h1>
+	<div id="content">
+		<h1 class="huge header">Summrise.io</h1>
+		<h2>Create Your Own Book Summaries</h2>
+		<hr>
+    <a href="/books" class="ui animated fade button" tabindex="0">
+      <div class="visible content">Get Started Now</div>
+      <div class="hidden content">Show me the books!</div>
+    </a>
+	</div>
 </div>
 
 <% include ./partials/footer %>
