@@ -38,11 +38,12 @@ passport.deserializeUser(User.deserializeUser());
 
 
 // global middleware
-// app.use(function(req, res, next) {
-//   res.locals.error = req.flash("error");
-//   res.locals.success = req.flash("success");
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  // res.locals.error = req.flash("error");
+  // res.locals.success = req.flash("success");
+  next();
+});
 
 app.use("/books/request", bookRequestRoutes);
 app.use("/books/:id/chapters", chapterRoutes);

@@ -8,11 +8,7 @@ router.get("/", (req, res) => res.render("landing"));
 router.get("/register", (req, res) => res.render("register"));
 
 router.post("/register", (req, res) => {
-  var newUser = new User({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    username: req.body.username,
-  });
+  var newUser = new User({ username: req.body.username });
   User.register(newUser, req.body.password, function(err, registeredUser) {
     if (err) {
       console.log(err);
@@ -29,7 +25,7 @@ router.get("/login", (req, res) => res.render("login"));
 
 router.post("/login", passport.authenticate("local", {
   successRedirect: "/books",
-  failureRedirect: "/",
+  failureRedirect: "/login",
 }), (req, res) => { /* empty function */ });
 
 router.get("/logout", (req, res) => {
