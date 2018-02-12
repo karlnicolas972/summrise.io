@@ -17,3 +17,7 @@
 	margin-top: 8.0em;
   max-width: 500px;
 }
+
+.container.flash.login-margin {
+	margin-bottom: -9.9em;
+}

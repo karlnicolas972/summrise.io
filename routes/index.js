@@ -22,7 +22,7 @@ router.post("/register", (req, res) => {
   });
 });
 
-router.get("/login", (req, res) => res.render("login"));
+router.get("/login", (req, res) => res.render("login", { isLoginPage: true }));
 
 router.post("/login", passport.authenticate("local", {
   successRedirect: "/books",
