@@ -101,12 +101,35 @@ router.put("/:id", middleware.checkAdmin, (req, res) => {
 });
 
 router.delete("/:id", middleware.checkAdmin, (req, res) => {
-  // delete all the chapters associated with the book
-  Book.findByIdAndRemove(req.params.id, function(err) {
+  // Chapter.remove({ book: { id: req.params.id } }, function(err) {
+  //   if (err) {
+  //     req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+  //   } else {
+  //     Book.findByIdAndRemove(req.params.id, function(err) {
+  //       if (err) {
+  //         req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+  //       }
+  //       res.redirect("/books/");
+  //     });
+  //   }
+  // });
+  Book.findById(req.params.id, function(err, foundBook) {
     if (err) {
-      req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+      console.log(err);
+    } else {
+      Chapter.remove({ book: { id: foundBook._id } }, function(err) {
+        if (err) {
+          console.log(err);
+        } else {
+          Book.findByIdAndRemove(req.params.id, function(err) {
+            if (err) {
+              req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+            }
+            res.redirect("/books/");
+          });
+        }
+      })
     }
-    res.redirect("/books/");
   });
 });
 

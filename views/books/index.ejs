@@ -19,11 +19,11 @@
     <% books.forEach(function(book) { %>
     <div class="thirteen wide mobile eight wide tablet four wide computer column">
       <div class="ui card">
-        <a href="books/<%= book._id %>" class="image">
+        <a href="/books/<%= book._id %>" class="image">
           <img src="<%= book.coverImage %>" alt="<%= book.title %>">
         </a>
         <div class="content">
-          <a href="books/<%= book._id %>" class="header">
+          <a href="/books/<%= book._id %>" class="header">
             <%= book.title %>
           </a>
           <div class="meta">
