@@ -9,7 +9,7 @@ var Chapter = require("../models/chapter");
 router.get("/", (req, res) => {
   Book.find({}, function(err, foundBooks) {
     if (err) {
-      console.log(err);
+      req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
       res.redirect("back");
     } else {
       res.render("books/index", { books: foundBooks });
@@ -24,8 +24,8 @@ router.get("/", (req, res) => {
 router.get("/new/:request_id", (req, res) => {
   BookRequest.findById(req.params.request_id, function(err, foundRequest) {
     if (err || !foundRequest) {
-      console.log(err);
-      res.redirect("back");
+      req.flash("error", "This request does not exist!")
+      res.redirect("/books/request/all");
     } else {
       res.render("books/new", { request: foundRequest });
     }
@@ -35,7 +35,7 @@ router.get("/new/:request_id", (req, res) => {
 // create route
 // only admins can create a new book
 router.post("/new/:request_id", (req, res) => {
-  if (req.body.title && req.body.coverImage && req.body.author) {
+  if (req.body.title && req.body.coverImage && req.body.author && req.body.description) {
     var newBook = {
       title: req.body.title,
       coverImage: req.body.coverImage,
@@ -58,7 +58,8 @@ router.post("/new/:request_id", (req, res) => {
       }
     });
   } else {
-    res.redirect("books/new");
+    req.flash("error", "At least one of the fields is empty!")
+    res.redirect("/books/new/" + req.params.request_id);
   }
 });
 
@@ -66,7 +67,8 @@ router.post("/new/:request_id", (req, res) => {
 router.get("/:id", (req, res) => {
   Book.findById(req.params.id).populate("chapters").exec(function(err, foundBook) {
     if (err || !foundBook) {
-      res.redirect("back");
+      req.flash("error", "This book does not exist!");
+      res.redirect("/books");
     } else {
       res.render("books/show", { book: foundBook });
     }
@@ -76,9 +78,9 @@ router.get("/:id", (req, res) => {
 // edit route
 router.get("/:id/edit", (req, res) => {
   Book.findById(req.params.id, function(err, foundBook) {
-    if (err) {
-      console.log(err);
-      res.redirect("back");
+    if (err || !foundBook) {
+      req.flash("error", "This book does not exist!");
+      res.redirect("/books");
     } else {
       res.render("books/edit", { book: foundBook });
     }
@@ -89,10 +91,10 @@ router.get("/:id/edit", (req, res) => {
 router.put("/:id", (req, res) => {
   Book.findByIdAndUpdate(req.params.id, req.body.book, function(err, updatedBook) {
     if (err || !updatedBook) {
-      console.log(err);
-      res.redirect("back");
+      req.flash("error", "This book does not exist!");
+      res.redirect("/books");
     } else {
-      res.redirect("/books/")
+      res.redirect("/books")
     }
   });
 });
@@ -101,7 +103,7 @@ router.delete("/:id", (req, res) => {
   // delete all the chapters associated with the book
   Book.findByIdAndRemove(req.params.id, function(err) {
     if (err) {
-      console.log(err);
+      req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
     }
     res.redirect("/books/");
   });

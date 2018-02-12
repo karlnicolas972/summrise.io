@@ -3,7 +3,7 @@ var express = require("express");
 var app = express();
 var mongoose = require("mongoose");
 var methodOverride = require("method-override");
-// var flash = require("connect-flash");
+var flash = require("connect-flash");
 var User = require("./models/user");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
@@ -22,7 +22,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
-// app.use(flash());
+app.use(flash());
 
 // passport config
 app.use(require("express-session")({
@@ -40,8 +40,8 @@ passport.deserializeUser(User.deserializeUser());
 // global middleware
 app.use(function(req, res, next) {
   res.locals.currentUser = req.user;
-  // res.locals.error = req.flash("error");
-  // res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
   next();
 });
 

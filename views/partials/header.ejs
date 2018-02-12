@@ -23,3 +23,23 @@
     </div>
   </div>
 </div>
+
+
+  <% if (error && error.length > 0) { %>
+    <div class="ui flash container">
+      <div class="ui large negative message">
+        <i class="close icon"></i>
+        <%= error %>
+      </div>
+    </div>
+  <% } %>
+
+
+  <% if (success && success.length > 0) { %>
+    <div class="ui flash container">
+      <div class="ui large positive message">
+        <i class="close icon"></i>
+        <%= success %>
+      </div>
+    </div>
+  <% } %>

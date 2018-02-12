@@ -9,7 +9,7 @@ var Chapter = require("../models/chapter");
 router.get("/new", (req, res) => {
   Book.findById(req.params.id, function(err, foundBook) {
     if (err || !foundBook) {
-      console.log(err);
+      req.flash("error", "This book does not exist!");
       res.redirect("/books");
     } else {
       res.render("chapters/new", { book: foundBook });
@@ -28,14 +28,14 @@ router.post("/", (req, res) => {
     }
   };
   Chapter.create(newChapter, function(err, createdChapter) {
-    if (err) {
-      console.log(err);
-      res.redirect("back");
+    if (err || !createdChapter) {
+      req.flash("error", "This chapter couldn't be created. Please re-enter the contents of the chapter summary.")
+      res.redirect(`/books/${req.params.id}/chapters/new`);
     } else {
       Book.findById(req.params.id, function(err, foundBook) {
         if (err || !foundBook) {
-          console.log(err);
-          res.redirect("back");
+          req.flash("error", "This book does not exist!");
+          res.redirect(`/books/${req.params.id}/chapters/new`);
         } else {
           foundBook.chapters.push(createdChapter._id);
           foundBook.save();
@@ -50,8 +50,8 @@ router.post("/", (req, res) => {
 router.get("/:chapter_id/edit", (req, res) => {
   Chapter.findById(req.params.chapter_id, function(err, foundChapter) {
     if (err || !foundChapter) {
-      console.log(err);
-      res.redirect("back");
+      req.flash("error", "This chapter does not exist!")
+      res.redirect("/books/" + req.params.id);
     } else {
       res.render("chapters/edit", {
         chapter: foundChapter,
@@ -66,11 +66,9 @@ router.get("/:chapter_id/edit", (req, res) => {
 router.put("/:chapter_id", (req, res) => {
   Chapter.findByIdAndUpdate(req.params.chapter_id, req.body.chapter, function(err, updatedChapter) {
     if (err || !updatedChapter) {
-      console.log(err);
-      res.redirect("back");
-    } else {
-      res.redirect("/books/" + req.params.id);
+      req.flash("error", "This chapter does not exist!")
     }
+    res.redirect("/books/" + req.params.id);
   });
 });
 
@@ -78,11 +76,9 @@ router.put("/:chapter_id", (req, res) => {
 router.delete("/:chapter_id", (req, res) => {
   Chapter.findByIdAndRemove(req.params.chapter_id, function(err) {
     if (err) {
-      console.log(err);
-      res.redirect("back");
-    } else {
-      res.redirect("/books/" + req.params.id);
+      req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
     }
+    res.redirect("/books/" + req.params.id);
   })
 })
 

@@ -11,9 +11,10 @@ router.post("/register", (req, res) => {
   var newUser = new User({ username: req.body.username });
   User.register(newUser, req.body.password, function(err, registeredUser) {
     if (err) {
-      console.log(err);
+      req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
       res.redirect("register");
     } else {
+      req.flash("success", "You have been successfully registered. Welcome!")
       passport.authenticate("local")(req, res, function() {
         res.redirect("/books");
       });
@@ -26,10 +27,13 @@ router.get("/login", (req, res) => res.render("login"));
 router.post("/login", passport.authenticate("local", {
   successRedirect: "/books",
   failureRedirect: "/login",
+  successFlash: "Welcome back!",
+  failureFlash: "Invalid username or password.",
 }), (req, res) => { /* empty function */ });
 
 router.get("/logout", (req, res) => {
   req.logout();
+  req.flash("success", "You have been successfully logged out.")
   res.redirect("/");
 })
 
