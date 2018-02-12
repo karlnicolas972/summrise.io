@@ -14,7 +14,10 @@
     <a href="/books" class="header item"><i class="book icon"></i>Books</a>
     <div class="right menu">
       <% if (currentUser) { %>
-        <span class="header item"><i class="user outline icon"></i> Currently logged in as: <%= currentUser.username %> </span>
+        <span class="header item"><i class="user outline icon"></i> Logged in as: <%= currentUser.username %> </span>
+        <% if (currentUser.isAdmin) { %>
+        <a href="/register" class="header item"><i class="add user icon"></i>Add a new user</a>
+        <% } %>
         <a href="/logout" class="header item"><i class="remove user icon"></i>Log-out</a>
       <% } else { %>
         <a class="header item" href="/register"><i class="add user icon"></i>Sign Up</a>
@@ -23,8 +26,9 @@
     </div>
   </div>
 </div>
+
   <% if (error && error.length > 0) { %>
-    <% if (isLoginPage) { %>
+    <% if (isLoginOrSignupPage) { %>
       <div class="ui flash container login-margin">
     <% } else { %>
       <div class="ui flash container">
@@ -38,7 +42,11 @@
 
 
   <% if (success && success.length > 0) { %>
-    <div class="ui flash container">
+    <% if (isLoginOrSignupPage) { %>
+      <div class="ui flash container login-margin">
+    <% } else { %>
+      <div class="ui flash container">
+    <% } %>
       <div class="ui large positive message">
         <i class="close icon"></i>
         <%= success %>

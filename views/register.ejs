@@ -5,7 +5,11 @@
     <div class="left aligned column user-form">
       <h1 class="ui center aligned huge header">
         <div class="content">
+        <% if (currentUser && currentUser.isAdmin) { %>
+          Add a new user to Summrise
+        <% } else { %>
           Sign up to Summrise
+        <% } %>
         </div>
       </h1>
       <form class="ui large form" method="POST" action="/register">
@@ -18,6 +22,14 @@
             <label for="password">Password:</label>
             <input type="password" name="password" placeholder="Password">
           </div>
+          <% if (currentUser && currentUser.isAdmin) { %>
+            <div class="field">
+              <div class="ui toggle checkbox">
+                <input type="checkbox" name="isAdmin" value="true" tabindex="0" class="hidden">
+                <label for="isAdmin">Add this user as administrator</label>
+              </div>
+            </div>
+          <% } %>
           <input class="ui fluid button" type="submit" value="Sign-up!">
         </div>
       </form>

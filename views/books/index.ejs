@@ -8,7 +8,9 @@
     </div>
     <p>Here is the collection of books in our database. Want to write a chapter summary for a book that isn't here? Request a new book using the link below.</p>
     <a href="/books/request" class="ui green button">Request a new book!</a>
-    <a href="/books/request/all" class="ui blue button">View pending requests</a>
+    <% if (currentUser && currentUser.isAdmin) { %>
+      <a href="/books/request/all" class="ui blue button">View pending requests</a>
+    <% } %>
   </div>
 
   <br>
@@ -28,16 +30,18 @@
             By <%= book.author %>
           </div>
         </div>
-        <div class="extra content">
-          <div class="ui buttons">
-            <div>
-              <a href="/books/<%= book._id %>/edit" class="ui blue basic button">Edit Book</a>
+        <% if (currentUser && currentUser.isAdmin) { %>
+          <div class="extra content">
+            <div class="ui buttons">
+              <div>
+                <a href="/books/<%= book._id %>/edit" class="ui blue basic button">Edit Book</a>
+              </div>
+              <form class="delete-btn" action="/books/<%= book._id %>?_method=DELETE" method="POST">
+                <button class="ui red basic right floated button">Delete Book</button>
+              </form>
             </div>
-            <form class="delete-btn" action="/books/<%= book._id %>?_method=DELETE" method="POST">
-              <button class="ui red basic right floated button">Delete Book</button>
-            </form>
           </div>
-        </div>
+        <% } %>
       </div>
     </div>
     <% }); %>
