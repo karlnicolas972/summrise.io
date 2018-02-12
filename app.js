@@ -40,6 +40,7 @@ passport.deserializeUser(User.deserializeUser());
 // global middleware
 app.use(function(req, res, next) {
   res.locals.currentUser = req.user;
+  res.locals.isLoginPage = false;
   res.locals.error = req.flash("error");
   res.locals.success = req.flash("success");
   next();

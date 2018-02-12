@@ -9,7 +9,14 @@ var chapterSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Book"
     }
-  }
+  },
+  author: {
+		username: String,
+		id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User"
+		}
+	},
 });
 
 module.exports = mongoose.model("Chapter", chapterSchema);
