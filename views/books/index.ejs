@@ -31,8 +31,8 @@
           </div>
           <% if (book.description) { %>
             <div class="description">
-              <% if (book.description.length > 100) { %>
-                <%= book.description.substring(0, 100) %>...
+              <% if (book.description.length > 150) { %>
+                <%= book.description.substring(0, 150) %>...
               <% } else { %>
                 <%= book.description %>
               <% } %>
@@ -40,16 +40,12 @@
           <% } %>
         </div>
         <% if (currentUser && currentUser.isAdmin) { %>
-          <div class="extra content">
-            <div class="ui buttons">
-              <div>
-                <a href="/books/<%= book._id %>/edit" class="ui blue basic button">Edit Book</a>
-              </div>
-              <form class="delete-btn" action="/books/<%= book._id %>?_method=DELETE" method="POST">
-                <button class="ui red basic right floated button">Delete Book</button>
-              </form>
+          <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
+            <div class="ui two buttons">
+              <a href="/books/<%= book._id %>/edit" class="ui blue basic button">Edit</a>
+              <input type="submit" onclick="alertSure()" class="ui red basic button delete-btn" value="Delete">
             </div>
-          </div>
+          </form>
         <% } %>
       </div>
     </div>
