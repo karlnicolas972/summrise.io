@@ -66,7 +66,10 @@ router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
 
 // show route
 router.get("/:id", (req, res) => {
-  Book.findById(req.params.id).populate("chapters").exec(function(err, foundBook) {
+  Book.findById(req.params.id).populate({
+    path: "chapters",
+    options: { sort: "number" },
+  }).exec(function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
       res.redirect("/books");

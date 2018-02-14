@@ -3,7 +3,7 @@
 <div class="ui main container">
 
   <div class="ui message">
-    <p>Below you will find all the pending requests for book additions. To add a book to the database, simply click the "Add to database" button, where you will be prompted to edit the book's information. If a request does not look legitimate, click the "Delete request" button to remove it.</p>
+    <p>Below you will find all the pending requests for book additions. To add a book to the database, simply click the "Add to database" button, where you will be prompted to edit the book's information. If a request does not look legitimate, click the "Delete" button to remove it.</p>
   </div>
 
   <div class="ui four centered cards">
@@ -17,16 +17,12 @@
             By <%= request.author %>
           </div>
         </div>
-        <div class="extra content">
-          <div class="ui buttons">
-            <div>
-              <a href="/books/new/<%= request._id %>" class="ui basic green button">Add to database</a>
-            </div>
-            <form action="/books/request/<%= request._id %>?_method=DELETE" method="POST">
-              <button class="ui basic red button delete-btn">Delete request</button>
-            </form>
+        <form class="extra content" action="/books/request/<%= request._id %>?_method=DELETE" method="POST">
+          <div class="ui two buttons">
+            <a href="/books/new/<%= request._id %>" class="ui basic green button">Add to database</a>
+            <input type="submit" class="ui basic red button delete-btn" value="Delete">
           </div>
-        </div>
+        </form>
       </div>
     <% }); %>
   </div>

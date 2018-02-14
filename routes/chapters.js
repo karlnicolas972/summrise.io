@@ -39,6 +39,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
           res.redirect(`/books/${req.params.id}/chapters/new`);
         } else {
           foundBook.chapters.push(createdChapter._id);
+          foundBook.chapters.sort();
           foundBook.save();
           res.redirect("/books/" + req.params.id);
         }
@@ -78,10 +79,23 @@ router.delete("/:chapter_id", (req, res) => {
   Chapter.findByIdAndRemove(req.params.chapter_id, function(err) {
     if (err) {
       req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+      res.redirect("/books/" + req.params.id);
+    } else {
+      // delete chapter from the book's chapters array
+      Book.findById(req.params.id, function(err, foundBook) {
+        if (err || !foundBook) {
+          req.flash("error", "This book does not exist!");
+          res.redirect("/books/" + req.params.id);
+        } else {
+          var indexToBeDeleted = foundBook.chapters.indexOf(req.params.chapter_id);
+          foundBook.chapters.splice(indexToBeDeleted, 1);
+          foundBook.save();
+          res.redirect("/books/" + req.params.id);
+        }
+      });
     }
-    res.redirect("/books/" + req.params.id);
-  })
-})
+  });
+});
 
 
 module.exports = router;
