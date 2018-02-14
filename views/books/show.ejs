@@ -20,19 +20,21 @@
 
   <div class="ui four cards">
     <% book.chapters.forEach(function(chapter) { %>
-      <div class="card">
-        <div class="content">
-          <a class="header" href="#">Chapter <%= chapter.number %> - <%= chapter.title %></a>
-          <br>
-          <a class="description" href="#"><%= chapter.summary.substring(0, 250) %>...</a>
+      <% if (currentUser && chapter.author.id.equals(currentUser._id)) { %>
+        <div class="card">
+          <div class="content">
+            <a class="header" href="#">Chapter <%= chapter.number %> - <%= chapter.title %></a>
+            <br>
+            <a class="description" href="#"><%= chapter.summary.substring(0, 250) %>...</a>
+          </div>
+          <form class="extra content" action="/books/<%= book._id %>/chapters/<%= chapter._id %>?_method=DELETE" method="POST">
+              <div class="ui two buttons">
+                  <a href="/books/<%= book._id %>/chapters/<%= chapter._id %>/edit" class="ui blue basic button">Edit</a>
+                  <input type="submit" class="ui red basic button delete-btn" value="Delete">
+              </div>
+          </form>
         </div>
-        <form class="extra content" action="/books/<%= book._id %>/chapters/<%= chapter._id %>?_method=DELETE" method="POST">
-            <div class="ui two buttons">
-                <a href="/books/<%= book._id %>/chapters/<%= chapter._id %>/edit" class="ui blue basic button">Edit</a>
-                <input type="submit" class="ui red basic button delete-btn" value="Delete">
-            </div>
-        </form>
-      </div>
+      <% } %>
     <% }); %>
   </div>
 

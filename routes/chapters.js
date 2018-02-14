@@ -38,8 +38,10 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
           req.flash("error", "This book does not exist!");
           res.redirect(`/books/${req.params.id}/chapters/new`);
         } else {
+          createdChapter.author.id = req.user._id;
+          createdChapter.author.username = req.user.username;
+          createdChapter.save();
           foundBook.chapters.push(createdChapter._id);
-          foundBook.chapters.sort();
           foundBook.save();
           res.redirect("/books/" + req.params.id);
         }
@@ -49,7 +51,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 });
 
 // edit route
-router.get("/:chapter_id/edit", (req, res) => {
+router.get("/:chapter_id/edit", middleware.checkChapterOwnership, (req, res) => {
   Chapter.findById(req.params.chapter_id, function(err, foundChapter) {
     if (err || !foundChapter) {
       req.flash("error", "This chapter does not exist!")
@@ -65,7 +67,7 @@ router.get("/:chapter_id/edit", (req, res) => {
 
 
 // update route
-router.put("/:chapter_id", (req, res) => {
+router.put("/:chapter_id", middleware.checkChapterOwnership, (req, res) => {
   Chapter.findByIdAndUpdate(req.params.chapter_id, req.body.chapter, function(err, updatedChapter) {
     if (err || !updatedChapter) {
       req.flash("error", "This chapter does not exist!")
@@ -75,7 +77,7 @@ router.put("/:chapter_id", (req, res) => {
 });
 
 // delete route
-router.delete("/:chapter_id", (req, res) => {
+router.delete("/:chapter_id", middleware.checkChapterOwnership, (req, res) => {
   Chapter.findByIdAndRemove(req.params.chapter_id, function(err) {
     if (err) {
       req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
