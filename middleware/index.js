@@ -10,6 +10,14 @@ middlewareObj.isLoggedIn = function(req, res, next) {
   res.redirect("/login");
 };
 
+middlewareObj.isNotLoggedIn = function(req, res, next) {
+  if (!req.isAuthenticated()) {
+    return next();
+  }
+  req.flash("error", "There is already a user account logged in. Please log out first to perform this action.");
+  res.redirect("/books");
+};
+
 middlewareObj.checkAdmin = function(req, res, next) {
   if (req.isAuthenticated()) {
     if (req.user.isAdmin) {

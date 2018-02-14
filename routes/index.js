@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var User = require("../models/user");
 var passport = require("passport");
+var middleware = require("../middleware");
 
 router.get("/", (req, res) => res.render("landing"));
 
@@ -36,7 +37,7 @@ router.post("/register", (req, res) => {
   }
 });
 
-router.get("/login", (req, res) => res.render("login", { isLoginOrSignupPage: true }));
+router.get("/login", middleware.isNotLoggedIn, (req, res) => res.render("login", { isLoginOrSignupPage: true }));
 
 router.post("/login", passport.authenticate("local", {
   successRedirect: "/books",
