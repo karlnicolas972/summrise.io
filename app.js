@@ -7,6 +7,7 @@ var flash = require("connect-flash");
 var User = require("./models/user");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
+var expressSanitizer = require("express-sanitizer");
 var port = process.env.PORT || 9720;
 var databaseURL = process.env.DATABASEURL || "mongodb://localhost/summrise";
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
+app.use(expressSanitizer());
 
 // passport config
 app.use(require("express-session")({

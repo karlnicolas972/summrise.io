@@ -1,21 +1,21 @@
 <% include ../partials/header %>
 
 <div class="ui main container">
-  <div class="ui header">
-    <h1><%= book.title %></h1>
-    <p>By <%= book.author %></p>
-  </div>
 
-  <div class="content">
-    <div class="description">
-      <%= book.description %>
+  <div class="ui segment">
+    <div class="ui header">
+      <h1><%= book.title %></h1>
+      <p>By <%= book.author %></p>
     </div>
+    <div class="content">
+      <div class="description">
+        <%= book.description %>
+      </div>
+    </div>
+    <br>
+    <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
   </div>
 
-  <br>
-  <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
-
-  <br>
   <br>
 
   <div class="ui four cards">
@@ -23,9 +23,13 @@
       <% if (currentUser && chapter.author.id.equals(currentUser._id)) { %>
         <div class="card">
           <div class="content">
-            <a class="header" href="#">Chapter <%= chapter.number %> - <%= chapter.title %></a>
+            <a class="header" href="/books/<%= book._id %>/chapters/<%= chapter._id %>">Chapter <%= chapter.number %> - <%= chapter.title %></a>
             <br>
-            <a class="description" href="#"><%= chapter.summary.substring(0, 250) %>...</a>
+            <% if (chapter.summary.length < 250) { %>
+              <a class="description" href="/books/<%= book._id %>/chapters/<%= chapter._id %>"><%- chapter.summary.substring(0, 250) %></a>
+            <% } else { %>
+              <a class="description" href="/books/<%= book._id %>/chapters/<%= chapter._id %>"><%- chapter.summary.substring(0, 250) %>...</a>
+            <% } %>
           </div>
           <form class="extra content" action="/books/<%= book._id %>/chapters/<%= chapter._id %>?_method=DELETE" method="POST">
               <div class="ui two buttons">

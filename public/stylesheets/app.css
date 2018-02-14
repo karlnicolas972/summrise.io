@@ -1,3 +1,8 @@
+.container.main.segment {
+	margin-top: 5.0em;
+	margin-bottom: 5.0em;
+}
+
 .container.main {
 	margin-top: 5.0em;
 	margin-bottom: 5.0em;
@@ -17,3 +22,11 @@
 .container.flash.login-margin {
 	margin-bottom: -9.9em;
 }
+
+/* CKEditor 5 Styling  */
+
+.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {
+	height: 300px;
+}
+
+/* End CKEditor 5 Styling  */

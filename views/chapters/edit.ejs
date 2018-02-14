@@ -17,7 +17,7 @@
     </div>
     <div class="field">
       <label for="summary">Your Summary:</label>
-      <textarea name="chapter[summary]"><%= chapter.summary %></textarea>
+      <textarea name="chapter[summary]" class="editor"><%- chapter.summary %></textarea>
     </div>
     <button class="ui button">Submit!</button>
   </form>
@@ -25,4 +25,4 @@
 </div>
 
 
-<% include ../partials/header %>
+<% include ../partials/footer %>

@@ -4,7 +4,7 @@ var Book = require("../models/book");
 var BookRequest = require("../models/request");
 var Chapter = require("../models/chapter");
 var middleware = require("../middleware");
-
+var expressSanitizer = require("express-sanitizer");
 
 // index route
 router.get("/", (req, res) => {
@@ -36,6 +36,7 @@ router.get("/new/:request_id", middleware.checkAdmin, (req, res) => {
 // create route
 // only admins can create a new book
 router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
+  req.body.description = req.sanitize(req.body.description);
   if (req.body.title && req.body.coverImage && req.body.author && req.body.description) {
     var newBook = {
       title: req.body.title,
@@ -93,6 +94,7 @@ router.get("/:id/edit", middleware.checkAdmin, (req, res) => {
 
 // update route
 router.put("/:id", middleware.checkAdmin, (req, res) => {
+  req.body.book.description = req.sanitize(req.body.book.description);
   Book.findByIdAndUpdate(req.params.id, req.body.book, function(err, updatedBook) {
     if (err || !updatedBook) {
       req.flash("error", "This book does not exist!");

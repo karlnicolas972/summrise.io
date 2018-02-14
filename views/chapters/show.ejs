@@ -1,0 +1,12 @@
+<% include ../partials/header %>
+
+<div class="ui main text container segment">
+  <h1 class="ui header">Chapter <%= chapter.number %> - <%= chapter.title %></h1>
+  <!-- <hr> -->
+  <p>Your summary:</p>
+  <div>
+    <%- chapter.summary %>
+  </div>
+</div>
+
+<% include ../partials/footer %>
