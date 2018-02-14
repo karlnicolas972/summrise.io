@@ -101,21 +101,10 @@ router.put("/:id", middleware.checkAdmin, (req, res) => {
 });
 
 router.delete("/:id", middleware.checkAdmin, (req, res) => {
-  // Chapter.remove({ book: { id: req.params.id } }, function(err) {
-  //   if (err) {
-  //     req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-  //   } else {
-  //     Book.findByIdAndRemove(req.params.id, function(err) {
-  //       if (err) {
-  //         req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-  //       }
-  //       res.redirect("/books/");
-  //     });
-  //   }
-  // });
   Book.findById(req.params.id, function(err, foundBook) {
-    if (err) {
-      console.log(err);
+    if (err || !foundBook) {
+      req.flash("error", "This book does not exist!");
+      res.redirect("/books");
     } else {
       Chapter.remove({ book: { id: foundBook._id } }, function(err) {
         if (err) {
@@ -128,7 +117,7 @@ router.delete("/:id", middleware.checkAdmin, (req, res) => {
             res.redirect("/books/");
           });
         }
-      })
+      });
     }
   });
 });

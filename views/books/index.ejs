@@ -29,6 +29,15 @@
           <div class="meta">
             By <%= book.author %>
           </div>
+          <% if (book.description) { %>
+            <div class="description">
+              <% if (book.description.length > 100) { %>
+                <%= book.description.substring(0, 100) %>...
+              <% } else { %>
+                <%= book.description %>
+              <% } %>
+            </div>
+          <% } %>
         </div>
         <% if (currentUser && currentUser.isAdmin) { %>
           <div class="extra content">

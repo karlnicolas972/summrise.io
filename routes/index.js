@@ -8,27 +8,32 @@ router.get("/", (req, res) => res.render("landing"));
 router.get("/register", (req, res) => res.render("register", { isLoginOrSignupPage: true }));
 
 router.post("/register", (req, res) => {
-  var newUser;
-  if (req.body.isAdmin == null) {
-    newUser = new User({ username: req.body.username, isAdmin: false });
-  } else {
-    newUser = new User({ username: req.body.username, isAdmin: true });
-  }
-  User.register(newUser, req.body.password, function(err, registeredUser) {
-    if (err) {
-      req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-      res.redirect("register");
+  if (req.body.username && req.body.password) {
+    var newUser;
+    if (req.body.isAdmin == null) {
+      newUser = new User({ username: req.body.username, isAdmin: false });
     } else {
-      if (!req.isAuthenticated()) {
-        req.flash("success", "You have been successfully registered. Welcome!")
-        passport.authenticate("local")(req, res, function() {
-          res.redirect("/books");
-        });
-      } else {
-        res.redirect("/books");
-      }
+      newUser = new User({ username: req.body.username, isAdmin: true });
     }
-  });
+    User.register(newUser, req.body.password, function(err, registeredUser) {
+      if (err) {
+        req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+        res.redirect("register");
+      } else {
+        if (!req.isAuthenticated()) {
+          req.flash("success", "You have been successfully registered. Welcome!")
+          passport.authenticate("local")(req, res, function() {
+            res.redirect("/books");
+          });
+        } else {
+          res.redirect("/books");
+        }
+      }
+    });
+  } else {
+    req.flash("error", "At least one of the fields is empty. Please re-enter your details and try again.");
+    res.redirect("/register");
+  }
 });
 
 router.get("/login", (req, res) => res.render("login", { isLoginOrSignupPage: true }));
