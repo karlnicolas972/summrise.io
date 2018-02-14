@@ -8,7 +8,7 @@ var middleware = require("../middleware");
 
 // new route
 router.get("/new", middleware.isLoggedIn, (req, res) => {
-  Book.findById(req.params.id, function(err, foundBook) {
+  Book.findById(req.params.id).populate("chapters").exec(function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
       res.redirect("/books");

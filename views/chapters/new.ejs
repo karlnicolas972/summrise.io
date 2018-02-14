@@ -9,7 +9,7 @@
   <form class="ui form" action="/books/<%= book._id %>/chapters" method="POST">
     <div class="field">
       <label for="number">Chapter Number:</label>
-      <input type="number" name="number" min="1" step="1" value="<%= book.chapters.length + 1%>">
+      <input type="number" name="number" min="1" step="1" value="<%= book.chapters.filter((chapter) => chapter.author.id.equals(currentUser._id)).length + 1 %>">
     </div>
     <div class="field">
       <label for="title">Title:</label>
