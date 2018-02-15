@@ -9,7 +9,7 @@
     </div>
     <div class="content">
       <div class="description">
-        <%= book.description %>
+        <%- book.description %>
       </div>
     </div>
     <br>
@@ -32,10 +32,10 @@
             <% } %>
           </div>
           <form class="extra content" action="/books/<%= book._id %>/chapters/<%= chapter._id %>?_method=DELETE" method="POST">
-              <div class="ui two buttons">
-                  <a href="/books/<%= book._id %>/chapters/<%= chapter._id %>/edit" class="ui blue basic button">Edit</a>
-                  <input type="submit" class="ui red basic button delete-btn" value="Delete">
-              </div>
+            <div class="ui two buttons">
+                <a href="/books/<%= book._id %>/chapters/<%= chapter._id %>/edit" class="ui blue basic button">Edit</a>
+                <input type="submit" class="ui red basic button delete-btn" value="Delete">
+            </div>
           </form>
         </div>
       <% } %>

@@ -1,12 +1,21 @@
 <% include ../partials/header %>
 
 <div class="ui main text container segment">
-  <h1 class="ui header">Chapter <%= chapter.number %> - <%= chapter.title %></h1>
-  <!-- <hr> -->
+  <h1 class="ui centered header">Chapter <%= chapter.number %> - <%= chapter.title %></h1>
+  <form class="extra content" action="/books/<%= book_id %>/chapters/<%= chapter._id %>?_method=DELETE" method="POST">
+    <div class="ui three buttons">
+        <a href="/books/<%= book_id %>" class="ui basic teal button">Back</a>
+        <a href="/books/<%= book_id %>/chapters/<%= chapter._id %>/edit" class="ui blue basic button">Edit</a>
+        <input type="submit" class="ui red basic button delete-btn" value="Delete">
+    </div>
+  </form>
+  <br>
   <p>Your summary:</p>
   <div>
     <%- chapter.summary %>
   </div>
+
+
 </div>
 
 <% include ../partials/footer %>

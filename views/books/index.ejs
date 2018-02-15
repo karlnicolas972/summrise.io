@@ -31,10 +31,10 @@
           </div>
           <% if (book.description) { %>
             <div class="description">
-              <% if (book.description.length > 150) { %>
-                <%= book.description.substring(0, 150) %>...
+              <% if (book.description.length > 200) { %>
+                <%- book.description.substring(0, 200) %>...
               <% } else { %>
-                <%= book.description %>
+                <%- book.description %>
               <% } %>
             </div>
           <% } %>

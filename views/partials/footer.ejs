@@ -1,5 +1,5 @@
-<script
-src="https://code.jquery.com/jquery-3.1.1.min.js"
+</div> <!-- This closing div is for the pusher div required by the sidebar at the header.ejs file -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
 integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.js"></script>
@@ -8,6 +8,7 @@ $('.message .close').on('click', function() {
   $(this).closest('.flash').fadeOut(500);
 });
 $('.ui.checkbox').checkbox();
+$('.sidebar-toggle').on('click', () => $('.ui.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle'));
 $('.delete-btn').on('click', () => confirm("Are you sure you want to delete this item?"));
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js"></script>

@@ -52,13 +52,17 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
   });
 });
 
+// show route
 router.get("/:chapter_id", middleware.checkChapterOwnership, (req, res) => {
   Chapter.findById(req.params.chapter_id, function(err, foundChapter) {
     if (err || !foundChapter) {
       req.flash("error", "This chapter does not exist!");
       res.redirect("/books/" + req.params.id);
     } else {
-      res.render("chapters/show", { chapter: foundChapter });
+      res.render("chapters/show", {
+        chapter: foundChapter,
+        book_id: req.params.id,
+      });
     }
   });
 });
