@@ -8,7 +8,8 @@ $('.message .close').on('click', function() {
   $(this).closest('.flash').fadeOut(500);
 });
 $('.ui.checkbox').checkbox();
-$('.sidebar-toggle').on('click', () => $('.ui.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle'));
+$('.left-sidebar-toggle').on('click', () => $('.ui.left.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle'));
+$('.right-sidebar-toggle').on('click', () => $('.ui.right.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle'));
 $('.delete-btn').on('click', () => confirm("Are you sure you want to delete this item?"));
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js"></script>

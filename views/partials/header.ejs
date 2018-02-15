@@ -15,31 +15,65 @@
     <a href="#" class="item"><i class="mail icon"></i>Contact Us</a>
   </div>
 
+  <div class="ui right vertical menu inverted labeled icon sidebar">
+    <% if (currentUser) { %>
+      <span class="header item"><i class="user outline icon"></i> User: <%= currentUser.username %> </span>
+      <% if (currentUser.isAdmin) { %>
+      <a href="/register" class="item"><i class="add user icon"></i>Add user</a>
+      <% } %>
+      <a href="/logout" class="item"><i class="remove user icon"></i>Log-out</a>
+    <% } else { %>
+      <a class="item" href="/register"><i class="add user icon"></i>Sign Up</a>
+      <a class="item" href="/login"><i class="user circle icon"></i>Log-in</a>
+    <% } %>
+  </div>
+
 <div class="dimmed pusher"> <!-- The closing div for this is located at the footer.ejs file -->
 
   <div class="ui big fixed inverted menu">
-    <div class="ui container">
-      <a href="/" class="header item"><i class="cubes icon"></i>Summrise.io</a>
-      <a class="header item sidebar-toggle"><i class="sidebar icon"></i> Menu</a>
-      <div class="header item">
-        <form class="ui inverted transparent action icon input" action="#" method="POST">
-          <input type="text" name="searchTerm" placeholder="Search for a book...">
-          <button class="ui black icon button"><i class="search icon"></i></button>
-        </form>
+    <div class="ui centered grid container">
+      <div class="computer only row">
+        <a href="/" class="header item"><i class="cubes icon"></i>Summrise.io</a>
+        <a class="header item left-sidebar-toggle"><i class="sidebar icon"></i> Menu</a>
+        <div class="header item">
+          <form class="ui inverted transparent action icon input" action="#" method="POST">
+            <input type="text" name="searchTerm" placeholder="Search for a book...">
+            <button class="ui black icon button"><i class="search icon"></i></button>
+          </form>
+        </div>
+
+        <div class="right menu">
+          <% if (currentUser) { %>
+            <span class="header item"><i class="user outline icon"></i> Logged in as: <%= currentUser.username %> </span>
+            <% if (currentUser.isAdmin) { %>
+            <a href="/register" class="header item"><i class="add user icon"></i>Add user</a>
+            <% } %>
+            <a href="/logout" class="header item"><i class="remove user icon"></i>Log-out</a>
+          <% } else { %>
+            <a class="header item" href="/register"><i class="add user icon"></i>Sign Up</a>
+            <a class="header item" href="/login"><i class="user circle icon"></i>Log-in</a>
+          <% } %>
+        </div>
       </div>
 
-      <div class="right menu">
-        <% if (currentUser) { %>
-          <span class="header item"><i class="user outline icon"></i> Logged in as: <%= currentUser.username %> </span>
-          <% if (currentUser.isAdmin) { %>
-          <a href="/register" class="header item"><i class="add user icon"></i>Add user</a>
-          <% } %>
-          <a href="/logout" class="header item"><i class="remove user icon"></i>Log-out</a>
-        <% } else { %>
-          <a class="header item" href="/register"><i class="add user icon"></i>Sign Up</a>
-          <a class="header item" href="/login"><i class="user circle icon"></i>Log-in</a>
-        <% } %>
+      <div class="mobile only row">
+        <a href="/" class="header item"><i class="cubes icon"></i>Summrise.io</a>
+        <a href="#" class="header item"><i class="search icon"></i></a>
+        <a class="header item left-sidebar-toggle right-sidebar-toggle"><i class="sidebar icon"></i></a>
       </div>
+
+      <div class="tablet only row">
+        <a href="/" class="header item"><i class="cubes icon"></i>Summrise.io</a>
+        <div class="header item">
+          <form class="ui inverted transparent action icon input" action="#" method="POST">
+            <input type="text" name="searchTerm" placeholder="Search for a book...">
+            <button class="ui black icon button"><i class="search icon"></i></button>
+          </form>
+        </div>
+        <a class="header item left-sidebar-toggle right-sidebar-toggle"><i class="sidebar icon"></i></a>
+      </div>
+
+
     </div>
   </div>
 
