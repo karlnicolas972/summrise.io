@@ -15,6 +15,10 @@
 
   <br>
 
+  <% if (books && books.length === 0) { %>
+    <p>No results found. Please recheck your query and try again. If the book you are looking for isn't found, <a href="/books/request">request it here</a> and it will be added to our database shortly.</p>
+  <% } %>
+
   <div class="ui centered grid">
     <% books.forEach(function(book) { %>
     <div class="thirteen wide mobile eight wide tablet four wide computer column">

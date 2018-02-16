@@ -13,15 +13,24 @@
     <% } %>
   </div>
 
+  <label><strong>Page No: </strong></label>
+  <div class="ui small pagination menu">
+    <% for (var i = 1; i <= numPages; i++) { %>
+      <% if (currentPage == i) { %>
+        <a href="/books/page/<%= i %>" class="active item"><%= i %></a>
+      <% } else { %>
+        <a href="/books/page/<%= i %>" class="item"><%= i %></a>
+      <% } %>
+    <% } %>
+  </div>
+
+  <br>
   <br>
 
-  <div class="ui centered grid">
+  <div class="ui doubling stackable four cards">
     <% books.forEach(function(book) { %>
-    <div class="thirteen wide mobile eight wide tablet four wide computer column">
-      <div class="ui card">
-        <a href="/books/<%= book._id %>" class="image">
-          <img src="<%= book.coverImage %>" alt="<%= book.title %>">
-        </a>
+      <div class="card">
+
         <div class="content">
           <a href="/books/<%= book._id %>" class="header">
             <%= book.title %>
@@ -31,24 +40,26 @@
           </div>
           <% if (book.description) { %>
             <div class="description">
-              <% if (book.description.length > 200) { %>
-                <%- book.description.substring(0, 200) %>...
-              <% } else { %>
-                <%- book.description %>
-              <% } %>
+              <a href="/books/<%= book._id %>">
+                <% if (book.description.length > 200) { %>
+                  <%- book.description.substring(0, 200) %>...
+                <% } else { %>
+                  <%- book.description %>
+                <% } %>
+              </a>
             </div>
           <% } %>
         </div>
+
         <% if (currentUser && currentUser.isAdmin) { %>
           <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
             <div class="ui two buttons">
               <a href="/books/<%= book._id %>/edit" class="ui blue basic button">Edit</a>
-              <input type="submit" onclick="alertSure()" class="ui red basic button delete-btn" value="Delete">
+              <input type="submit" class="ui red basic button delete-btn" value="Delete">
             </div>
           </form>
         <% } %>
       </div>
-    </div>
     <% }); %>
   </div>
 

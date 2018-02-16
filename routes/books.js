@@ -5,15 +5,30 @@ var BookRequest = require("../models/request");
 var Chapter = require("../models/chapter");
 var middleware = require("../middleware");
 var expressSanitizer = require("express-sanitizer");
+var itemsPerPage = 16;
 
 // index route
-router.get("/", (req, res) => {
-  Book.find({}, function(err, foundBooks) {
+router.get("/", (req, res) => res.redirect("/books/page/1"));
+
+// paginated index route
+router.get("/page/:page_no", (req, res) => {
+  Book.count({}, function(err, bookCount) {
     if (err) {
       req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
       res.redirect("back");
     } else {
-      res.render("books/index", { books: foundBooks });
+      Book.find({}).skip((req.params.page_no - 1) * itemsPerPage).limit(itemsPerPage).exec(function(err, foundBooks) {
+        if (err) {
+          req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+          res.redirect("/books");
+        } else {
+          res.render("books/index", {
+            books: foundBooks,
+            numPages: Math.ceil((bookCount) / itemsPerPage),
+            currentPage: req.params.page_no,
+          });
+        }
+      });
     }
   });
 });
