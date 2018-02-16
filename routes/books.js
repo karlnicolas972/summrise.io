@@ -18,6 +18,23 @@ router.get("/", (req, res) => {
   });
 });
 
+// search routes
+router.get("/search", (req, res) => res.render("books/search"));
+
+router.post("/search", (req, res) => {
+  Book.find({ $text: { $search: req.body.searchTerm }}).exec(function(err, foundBooks) {
+    if (err) {
+      req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+      res.redirect("/books");
+    } else {
+      res.render("books/search", {
+        books: foundBooks,
+        searchTerm: req.body.searchTerm
+      });
+    }
+  });
+});
+
 // new route
 // takes a book request and asks for more information from admins
 // before a book is added to the database

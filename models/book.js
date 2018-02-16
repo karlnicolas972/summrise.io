@@ -11,4 +11,6 @@ var bookSchema = new mongoose.Schema({
   }]
 });
 
+bookSchema.index({ title: "text", author: "text", description: "text" });
+
 module.exports = mongoose.model("Book", bookSchema);

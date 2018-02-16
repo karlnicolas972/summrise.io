@@ -1,0 +1,57 @@
+<% include ../partials/header %>
+
+<div class="ui main container">
+
+  <div class="ui large message">
+    <% if (searchTerm) { %>
+      <h1>Book search results for "<%= searchTerm %>":</h1>
+      <p>Didn't find what you were looking for?</p>
+    <% } %>
+    <form class="ui fluid action icon input" action="/books/search" method="POST">
+      <input type="text" name="searchTerm" placeholder="<%= (searchTerm) ? 'Try again...' : 'Search for a book...' %>">
+      <button class="ui icon button"><i class="search icon"></i></button>
+    </form>
+  </div>
+
+  <br>
+
+  <div class="ui centered grid">
+    <% books.forEach(function(book) { %>
+    <div class="thirteen wide mobile eight wide tablet four wide computer column">
+      <div class="ui card">
+        <a href="/books/<%= book._id %>" class="image">
+          <img src="<%= book.coverImage %>" alt="<%= book.title %>">
+        </a>
+        <div class="content">
+          <a href="/books/<%= book._id %>" class="header">
+            <%= book.title %>
+          </a>
+          <div class="meta">
+            By <%= book.author %>
+          </div>
+          <% if (book.description) { %>
+            <div class="description">
+              <% if (book.description.length > 200) { %>
+                <%- book.description.substring(0, 200) %>...
+              <% } else { %>
+                <%- book.description %>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
+        <% if (currentUser && currentUser.isAdmin) { %>
+          <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
+            <div class="ui two buttons">
+              <a href="/books/<%= book._id %>/edit" class="ui blue basic button">Edit</a>
+              <input type="submit" onclick="alertSure()" class="ui red basic button delete-btn" value="Delete">
+            </div>
+          </form>
+        <% } %>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+
+</div>
+
+<% include ../partials/footer %>

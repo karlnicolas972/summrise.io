@@ -17,7 +17,7 @@
 
   <div class="ui big top menu inverted sidebar">
     <div class="ui center aligned page grid container">
-      <form class="ui inverted transparent action icon input" action="#" method="POST">
+      <form class="ui inverted transparent action icon input" action="/books/search" method="POST">
         <input type="text" name="searchTerm" placeholder="Search for a book...">
         <button class="ui black icon button"><i class="search icon"></i></button>
       </form>
@@ -26,7 +26,7 @@
 
   <div class="ui right vertical menu inverted labeled icon sidebar">
     <% if (currentUser) { %>
-      <span class="header item"><i class="user outline icon"></i> User: <%= currentUser.username %> </span>
+      <span class="header item"><i class="user outline icon"></i><%= currentUser.username %> </span>
       <% if (currentUser.isAdmin) { %>
       <a href="/register" class="item"><i class="add user icon"></i>Add user</a>
       <% } %>
@@ -46,7 +46,7 @@
         <a href="/" class="header item"><i class="cubes icon"></i>Summrise.io</a>
         <a class="header item left-sidebar-toggle"><i class="sidebar icon"></i></a>
         <div class="header item">
-          <form class="ui inverted transparent action icon input" action="#" method="POST">
+          <form class="ui inverted transparent action icon input" action="/books/search" method="POST">
             <input type="text" name="searchTerm" placeholder="Search for a book...">
             <button class="ui black icon button"><i class="search icon"></i></button>
           </form>
@@ -74,7 +74,7 @@
       <div class="tablet only row">
         <a href="/" class="header item"><i class="cubes icon"></i>Summrise.io</a>
         <div class="header item">
-          <form class="ui inverted transparent action icon input" action="#" method="POST">
+          <form class="ui inverted transparent action icon input" action="/books/search" method="POST">
             <input type="text" name="searchTerm" placeholder="Search for a book...">
             <button class="ui black icon button"><i class="search icon"></i></button>
           </form>
