@@ -18,14 +18,23 @@
     <% } %>
   </div>
 
+
+
   <% if (numPages > 1) { %>
-    <label><strong>Page : </strong></label>
     <div class="ui small pagination menu">
+      <div class="item ui dropdown">
+        <div class="text">Sort by</div><i class="dropdown icon"></i>
+        <div class="menu">
+          <a href="/books/page/<%= currentPage %>/sort/author" class="item">Author</a>
+          <a href="/books/page/<%= currentPage %>/sort/title" class="item">Title</a>
+        </div>
+      </div>
+      <span class="item">Page: </span>
       <% for (var i = 1; i <= numPages; i++) { %>
         <% if (currentPage == i) { %>
-          <a href="/books/page/<%= i %>" class="active item"><%= i %></a>
+          <a href="/books/page/<%= i %>/sort/<%= sort_by %>" class="active item"><%= i %></a>
         <% } else { %>
-          <a href="/books/page/<%= i %>" class="item"><%= i %></a>
+          <a href="/books/page/<%= i %>/sort/<%= sort_by %>" class="item"><%= i %></a>
         <% } %>
       <% } %>
     </div>
@@ -75,13 +84,20 @@
 
   <% if (numPages > 1) { %>
     <br>
-    <label><strong>Page : </strong></label>
     <div class="ui small pagination menu">
+      <div class="item ui dropdown">
+        <div class="text">Sort by</div><i class="dropdown icon"></i>
+        <div class="menu">
+          <a href="/books/page/<%= currentPage %>/sort/author" class="item">Author</a>
+          <a href="/books/page/<%= currentPage %>/sort/title" class="item">Title</a>
+        </div>
+      </div>
+      <span class="item">Page: </span>
       <% for (var i = 1; i <= numPages; i++) { %>
         <% if (currentPage == i) { %>
-          <a href="/books/page/<%= i %>" class="active item"><%= i %></a>
+          <a href="/books/page/<%= i %>/sort/<%= sort_by %>" class="active item"><%= i %></a>
         <% } else { %>
-          <a href="/books/page/<%= i %>" class="item"><%= i %></a>
+          <a href="/books/page/<%= i %>/sort/<%= sort_by %>" class="item"><%= i %></a>
         <% } %>
       <% } %>
     </div>

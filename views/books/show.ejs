@@ -18,12 +18,12 @@
       <div class="tablet computer only row">
         <% if (currentUser && currentUser.isAdmin) { %>
           <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
-            <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
+            <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter summary</a>
             <a href="/books/<%= book._id %>/edit" class="ui blue button">Edit Book</a>
             <input type="submit" class="ui red button delete-btn" value="Delete Book">
           </form>
         <% } else { %>
-          <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
+          <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter summary</a>
         <% } %>
       </div>
       <div class="mobile only row">

@@ -24,10 +24,10 @@ router.post("/register", (req, res) => {
         if (!req.isAuthenticated()) {
           req.flash("success", "You have been successfully registered. Welcome!")
           passport.authenticate("local")(req, res, function() {
-            res.redirect("/books/page/1");
+            res.redirect("/books/page/1/sort/title");
           });
         } else {
-          res.redirect("/books/page/1");
+          res.redirect("/books/page/1/sort/title");
         }
       }
     });
@@ -40,7 +40,7 @@ router.post("/register", (req, res) => {
 router.get("/login", middleware.isNotLoggedIn, (req, res) => res.render("login", { isLoginOrSignupPage: true }));
 
 router.post("/login", passport.authenticate("local", {
-  successRedirect: "/books/page/1",
+  successRedirect: "/books/page/1/sort/title",
   failureRedirect: "/login",
   successFlash: "Welcome back!",
   failureFlash: "Invalid username or password.",

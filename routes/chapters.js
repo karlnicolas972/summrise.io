@@ -12,7 +12,7 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
   Book.findById(req.params.id).populate("chapters").exec(function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
-      res.redirect("/books/page/1");
+      res.redirect("/books/page/1/sort/title");
     } else {
       res.render("chapters/new", { book: foundBook });
     }
