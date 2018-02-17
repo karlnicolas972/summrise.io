@@ -14,15 +14,33 @@
     </div>
     <br>
 
-    <% if (currentUser && currentUser.isAdmin) { %>
-      <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
-        <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
-        <a href="/books/<%= book._id %>/edit" class="ui blue button">Edit Book</a>
-        <input type="submit" class="ui red button delete-btn" value="Delete Book">
-      </form>
-    <% } else { %>
-      <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
-    <% } %>
+    <div class="ui centered grid">
+      <div class="tablet computer only row">
+        <% if (currentUser && currentUser.isAdmin) { %>
+          <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
+            <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
+            <a href="/books/<%= book._id %>/edit" class="ui blue button">Edit Book</a>
+            <input type="submit" class="ui red button delete-btn" value="Delete Book">
+          </form>
+        <% } else { %>
+          <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
+        <% } %>
+      </div>
+      <div class="mobile only row">
+        <% if (currentUser && currentUser.isAdmin) { %>
+          <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
+            <div class="ui buttons">
+              <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add</a>
+              <a href="/books/<%= book._id %>/edit" class="ui blue button">Edit</a>
+              <input type="submit" class="ui red button delete-btn" value="Delete">
+            </div>
+          </form>
+        <% } else { %>
+          <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
+        <% } %>
+      </div>
+    </div>
+
   </div>
 
   <br>
@@ -35,14 +53,15 @@
             <a class="header" href="/books/<%= book._id %>/chapters/<%= chapter._id %>">Chapter <%= chapter.number %> - <%= chapter.title %></a>
             <br>
             <% if (chapter.summary.length < 250) { %>
-              <a class="description" href="/books/<%= book._id %>/chapters/<%= chapter._id %>"><%- chapter.summary.substring(0, 250) %></a>
+              <div class="description"><%- chapter.summary.substring(0, 250) %></div>
             <% } else { %>
-              <a class="description" href="/books/<%= book._id %>/chapters/<%= chapter._id %>"><%- chapter.summary.substring(0, 250) %>...</a>
+              <div class="description"><%- chapter.summary.substring(0, 250) %>...</div>
             <% } %>
           </div>
           <form class="extra content" action="/books/<%= book._id %>/chapters/<%= chapter._id %>?_method=DELETE" method="POST">
-            <div class="ui two buttons">
+            <div class="ui three buttons">
                 <a href="/books/<%= book._id %>/chapters/<%= chapter._id %>/edit" class="ui blue basic button">Edit</a>
+                <a href="/books/<%= book._id %>/chapters/<%= chapter._id %>" class="ui teal basic button">View</a>
                 <input type="submit" class="ui red basic button delete-btn" value="Delete">
             </div>
           </form>
