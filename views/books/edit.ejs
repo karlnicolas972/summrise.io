@@ -1,6 +1,6 @@
 <% include ../partials/header %>
 
-<div class="ui main container">
+<div class="ui main text container segment">
   <div class="ui huge header">
     <h1>Edit <%= book.title %></h1>
   </div>
@@ -13,10 +13,6 @@
     <div class="field">
       <label for="author">Author:</label>
       <input type="text" name="book[author]" value="<%= book.author %>">
-    </div>
-    <div class="field">
-      <label for="coverImage">Cover Image:</label>
-      <input type="text" name="book[coverImage]" value="<%= book.coverImage %>">
     </div>
     <div class="field">
       <label for="description">Description:</label>

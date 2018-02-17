@@ -5,7 +5,7 @@ var BookRequest = require("../models/request");
 var Chapter = require("../models/chapter");
 var middleware = require("../middleware");
 var expressSanitizer = require("express-sanitizer");
-var itemsPerPage = 16;
+var itemsPerPage = 12;
 
 // index route
 router.get("/", (req, res) => res.redirect("/books/page/1"));
@@ -51,6 +51,30 @@ router.post("/search", (req, res) => {
 });
 
 // new route
+router.get("/new", middleware.checkAdmin, (req, res) => res.render("books/new", { request: null }));
+
+// create route
+router.post("/new", middleware.checkAdmin, (req, res) => {
+  req.body.description = req.sanitize(req.body.description);
+  if (req.body.title && req.body.author && req.body.description) {
+    var newBook = {
+      title: req.body.title,
+      author: req.body.author,
+      description: req.body.description,
+    };
+    Book.create(newBook, function(err, createdBook) {
+      if (err) {
+        req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+      }
+      res.redirect("/books");
+    });
+  } else {
+    req.flash("error", "At least one of the fields is empty!")
+    res.redirect("/books/new");
+  }
+});
+
+// new route with request
 // takes a book request and asks for more information from admins
 // before a book is added to the database
 // only admins can create a new book
@@ -69,10 +93,9 @@ router.get("/new/:request_id", middleware.checkAdmin, (req, res) => {
 // only admins can create a new book
 router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
   req.body.description = req.sanitize(req.body.description);
-  if (req.body.title && req.body.coverImage && req.body.author && req.body.description) {
+  if (req.body.title && req.body.author && req.body.description) {
     var newBook = {
       title: req.body.title,
-      coverImage: req.body.coverImage,
       author: req.body.author,
       description: req.body.description,
     };
