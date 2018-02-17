@@ -15,17 +15,13 @@
 
   <br>
 
-  <% if (books && books.length === 0) { %>
+  <% if (searchTerm && books && books.length === 0) { %>
     <p>No results found. Please recheck your query and try again. If the book you are looking for isn't found, <a href="/books/request">request it here</a> and it will be added to our database shortly.</p>
   <% } %>
 
-  <div class="ui centered grid">
+  <div class="ui doubling stackable four cards">
     <% books.forEach(function(book) { %>
-    <div class="thirteen wide mobile eight wide tablet four wide computer column">
-      <div class="ui card">
-        <a href="/books/<%= book._id %>" class="image">
-          <img src="<%= book.coverImage %>" alt="<%= book.title %>">
-        </a>
+      <div class="card">
         <div class="content">
           <a href="/books/<%= book._id %>" class="header">
             <%= book.title %>
@@ -43,16 +39,21 @@
             </div>
           <% } %>
         </div>
+
         <% if (currentUser && currentUser.isAdmin) { %>
           <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
-            <div class="ui two buttons">
+            <div class="ui three buttons">
               <a href="/books/<%= book._id %>/edit" class="ui blue basic button">Edit</a>
-              <input type="submit" onclick="alertSure()" class="ui red basic button delete-btn" value="Delete">
+              <a href="/books/<%= book._id %>" class="ui basic teal button">View</a>
+              <input type="submit" class="ui red basic button delete-btn" value="Delete">
             </div>
           </form>
+        <% } else { %>
+          <div class="extra content">
+            <a class="ui fluid teal button" href="/books/<%= book._id %>">View chapters</a>
+          </div>
         <% } %>
       </div>
-    </div>
     <% }); %>
   </div>
 

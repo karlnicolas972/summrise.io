@@ -34,7 +34,7 @@ router.get("/page/:page_no", (req, res) => {
 });
 
 // search routes
-router.get("/search", (req, res) => res.render("books/search"));
+router.get("/search", (req, res) => res.render("books/search", { searchTerm: null, books: [] }));
 
 router.post("/search", (req, res) => {
   Book.find({ $text: { $search: req.body.searchTerm }}).exec(function(err, foundBooks) {
