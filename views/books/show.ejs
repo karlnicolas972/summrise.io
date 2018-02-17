@@ -20,6 +20,8 @@
         <a href="/books/<%= book._id %>/edit" class="ui blue button">Edit Book</a>
         <input type="submit" class="ui red button delete-btn" value="Delete Book">
       </form>
+    <% } else { %>
+      <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add a new chapter</a>
     <% } %>
   </div>
 

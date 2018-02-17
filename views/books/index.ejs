@@ -6,11 +6,14 @@
     <div class="ui huge header">
       <h1>Browse Our Books</h1>
     </div>
-    <p>Here is the collection of books in our database. Want to write a chapter summary for a book that isn't here? Request a new book using the link below.</p>
     <% if (currentUser && currentUser.isAdmin) { %>
-      <a href="/books/new" class="ui blue button">Add new book</a>
-      <a href="/books/request/all" class="ui teal button">View pending requests</a>
-    <% } else {%>
+      <p>Here is the collection of books in our database. To view (and approve or delete) requests submitted by our users, click the "View requests" button below.</p>
+      <div class="ui buttons">
+        <a href="/books/new" class="ui blue button">Add new book</a>
+        <a href="/books/request/all" class="ui teal button">View requests</a>
+      </div>
+    <% } else { %>
+      <p>Here is the collection of books in our database. Want to write a chapter summary for a book that isn't here? Request a new book using the link below.</p>
       <a href="/books/request" class="ui blue button">Request a new book!</a>
     <% } %>
   </div>
