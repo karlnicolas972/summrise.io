@@ -19,9 +19,14 @@ body {
 }
 
 
-h1 {
+.wide-header {
 	font-weight: 600;
 	font-size: 5em;
+}
+
+.narrow-header {
+	font-weight: 600;
+	font-size: 3em;
 }
 
 hr {

@@ -73,6 +73,20 @@
     <% }); %>
   </div>
 
+  <% if (numPages > 1) { %>
+    <br>
+    <label><strong>Page : </strong></label>
+    <div class="ui small pagination menu">
+      <% for (var i = 1; i <= numPages; i++) { %>
+        <% if (currentPage == i) { %>
+          <a href="/books/page/<%= i %>" class="active item"><%= i %></a>
+        <% } else { %>
+          <a href="/books/page/<%= i %>" class="item"><%= i %></a>
+        <% } %>
+      <% } %>
+    </div>
+  <% } %>
+
 </div>
 
 <% include ../partials/footer %>
