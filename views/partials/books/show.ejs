@@ -41,7 +41,7 @@
       <% } else { %>
         <div class="ui buttons">
           <a href="#" class="ui yellow buy button">Buy this book</a>
-          <a href="/books/<%= book._id %>/chapters/new" class="ui green button">New summary</a>
+          <a href="/books/<%= book._id %>/chapters/new" class="ui green button">New chapter</a>
         </div>
       <% } %>
     </div>
@@ -53,8 +53,8 @@
         </div>
       <% } else { %>
         <div class="ui buttons">
-          <a href="/books/<%= book._id %>" class="ui teal button">My summaries</a>
-          <a href="/books/<%= book._id %>/public" class="ui olive button">Public summaries</a>
+          <a href="/books/<%= book._id %>" class="ui teal button">My chapters</a>
+          <a href="/books/<%= book._id %>/public" class="ui olive button">Public chapters</a>
         </div>
       <% } %>
     </div>

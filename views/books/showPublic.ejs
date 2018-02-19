@@ -11,8 +11,10 @@
   <br>
 
   <div class="ui four doubling stackable cards">
+    <% var displayedChapters = 0; %>
     <% book.chapters.forEach(function(chapter) { %>
       <% if (chapter.isPublic) { %>
+        <% displayedChapters++; %>
         <div class="card">
           <div class="content">
             <a class="header" href="/books/<%= book._id %>/chapters/<%= chapter._id %>">Chapter <%= chapter.number %> - <%= chapter.title %></a>
@@ -37,6 +39,26 @@
       <% } %>
     <% }); %>
   </div>
+
+  <% if (displayedChapters === 0) { %>
+    <div class="ui large message grid">
+      <div class="row">
+        There are currently no public chapter summaries written for <%= book.title %>.
+      </div>
+      <div class="computer only row">
+        <div class="ui two buttons">
+          <a href="#" class="ui yellow buy button">Don't have this book yet? Buy it now!</a>
+          <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Already have this book? Write the first public chapter summary here.</a>
+        </div>
+      </div>
+      <div class="tablet mobile only row">
+        <div class="ui two buttons">
+          <a href="#" class="ui yellow buy button">Don't have this book yet? Buy it now!</a>
+          <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Write a public chapter summary</a>
+        </div>
+      </div>
+    </div>
+  <% } %>
 
 </div>
 

@@ -11,8 +11,10 @@
   <br>
 
   <div class="ui four doubling stackable cards">
+    <% var displayedChapters = 0; %>
     <% book.chapters.forEach(function(chapter) { %>
       <% if (currentUser && chapter.author.id.equals(currentUser._id)) { %>
+        <% displayedChapters++; %>
         <div class="card">
           <div class="content">
             <a class="header" href="/books/<%= book._id %>/chapters/<%= chapter._id %>">Chapter <%= chapter.number %> - <%= chapter.title %></a>
@@ -34,6 +36,26 @@
       <% } %>
     <% }); %>
   </div>
+
+  <% if (displayedChapters === 0) { %>
+    <div class="ui large message grid">
+      <div class="row">
+        You currently have no chapter summaries written for <%= book.title %>.
+      </div>
+      <div class="computer only row">
+        <div class="ui two buttons">
+          <a href="#" class="ui yellow buy button">Don't have this book yet? Buy it now!</a>
+          <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Already have this book? Write your first chapter summary here.</a>
+        </div>
+      </div>
+      <div class="tablet mobile only row">
+        <div class="ui two buttons">
+          <a href="#" class="ui yellow buy button">Don't have this book yet? Buy it now!</a>
+          <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Write your first chapter summary</a>
+        </div>
+      </div>
+    </div>
+  <% } %>
 
 </div>
 
