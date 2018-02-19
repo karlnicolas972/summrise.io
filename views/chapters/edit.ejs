@@ -22,6 +22,14 @@
       <label for="summary">Your Summary:</label>
       <textarea name="chapter[summary]" class="editor"><%- chapter.summary %></textarea>
     </div>
+
+    <div class="field">
+      <div class="ui toggle checkbox">
+        <input type="checkbox" name="isPublic" value="true" tabindex="0" class="hidden">
+        <label for="isPublic">Allow other people to see this chapter summary</label>
+      </div>
+    </div>
+    
     <button class="ui button">Submit!</button>
   </form>
 

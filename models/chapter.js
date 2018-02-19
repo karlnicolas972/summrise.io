@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 var chapterSchema = new mongoose.Schema({
   number: Number,
   title: String,
+  isPublic: Boolean,
   summary: String,
   book: {
     id: {

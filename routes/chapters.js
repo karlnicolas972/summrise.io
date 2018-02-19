@@ -25,11 +25,17 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
   var newChapter = {
     number: req.body.number,
     title: req.body.title,
+    isPublic: undefined,
     summary: req.body.summary,
     book: {
       id: req.params.id
     }
   };
+  if (req.body.isPublic == null) {
+    newChapter.isPublic = false;
+  } else {
+    newChapter.isPublic = true;
+  }
   Chapter.create(newChapter, function(err, createdChapter) {
     if (err || !createdChapter) {
       req.flash("error", "This chapter couldn't be created. Please re-enter the contents of the chapter summary.")
@@ -86,6 +92,11 @@ router.get("/:chapter_id/edit", middleware.checkChapterOwnership, (req, res) => 
 // update route
 router.put("/:chapter_id", middleware.checkChapterOwnership, (req, res) => {
   req.body.chapter.summary = req.sanitize(req.body.chapter.summary);
+  if (req.body.isPublic == null) {
+    req.body.chapter.isPublic = false;
+  } else {
+    req.body.chapter.isPublic = true;
+  }
   Chapter.findByIdAndUpdate(req.params.chapter_id, req.body.chapter, function(err, updatedChapter) {
     if (err || !updatedChapter) {
       req.flash("error", "This chapter does not exist!")
