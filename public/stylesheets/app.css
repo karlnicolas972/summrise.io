@@ -3,6 +3,14 @@
 	margin-bottom: 5.0em;
 }
 
+.ui.yellow.buy.button {
+	color: black;
+}
+
+.ui.yellow.buy.button:hover {
+	color: black;
+}
+
 .container.main {
 	margin-top: 5.0em;
 	margin-bottom: 5.0em;
@@ -11,7 +19,6 @@
 .container.flash {
 	margin-top: 5.0em;
 	margin-bottom: -2.9em;
-	/* margin-bottom: -9.9em; */
 }
 
 .user-form {

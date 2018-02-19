@@ -122,7 +122,7 @@ router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
   }
 });
 
-// show route
+// show route - only user's chapters
 router.get("/:id", (req, res) => {
   Book.findById(req.params.id).populate({
     path: "chapters",
@@ -132,7 +132,23 @@ router.get("/:id", (req, res) => {
       req.flash("error", "This book does not exist!");
       res.redirect("/books/page/1/sort/title");
     } else {
-      res.render("books/show", { book: foundBook });
+      res.render("books/showPrivate", { book: foundBook });
+    }
+  });
+});
+
+// show route - all public chapters
+// might require pagination
+router.get("/:id/public", (req, res) => {
+  Book.findById(req.params.id).populate({
+    path: "chapters",
+    options: { sort: "number" },
+  }).exec(function(err, foundBook) {
+    if (err || !foundBook) {
+      req.flash("error", "This book does not exist!");
+      res.redirect("/books/page/1/sort/title");
+    } else {
+      res.render("books/showPublic", { book: foundBook });
     }
   });
 });

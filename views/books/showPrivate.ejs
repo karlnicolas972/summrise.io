@@ -1,0 +1,40 @@
+<% include ../partials/header %>
+
+<div class="ui main container">
+
+  <% include ../partials/books/show %>
+
+  <div class="ui large header">
+    My Chapter Summaries
+  </div>
+
+  <br>
+
+  <div class="ui four doubling stackable cards">
+    <% book.chapters.forEach(function(chapter) { %>
+      <% if (currentUser && chapter.author.id.equals(currentUser._id)) { %>
+        <div class="card">
+          <div class="content">
+            <a class="header" href="/books/<%= book._id %>/chapters/<%= chapter._id %>">Chapter <%= chapter.number %> - <%= chapter.title %></a>
+            <br>
+            <% if (chapter.summary.length < 250) { %>
+              <div class="description"><%- chapter.summary.substring(0, 250) %></div>
+            <% } else { %>
+              <div class="description"><%- chapter.summary.substring(0, 250) %>...</div>
+            <% } %>
+          </div>
+          <form class="extra content" action="/books/<%= book._id %>/chapters/<%= chapter._id %>?_method=DELETE" method="POST">
+            <div class="ui three buttons">
+                <a href="/books/<%= book._id %>/chapters/<%= chapter._id %>/edit" class="ui blue basic button">Edit</a>
+                <a href="/books/<%= book._id %>/chapters/<%= chapter._id %>" class="ui teal basic button">View</a>
+                <input type="submit" class="ui red basic button delete-btn" value="Delete">
+            </div>
+          </form>
+        </div>
+      <% } %>
+    <% }); %>
+  </div>
+
+</div>
+
+<% include ../partials/footer %>
