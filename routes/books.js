@@ -138,17 +138,38 @@ router.get("/:id", (req, res) => {
 });
 
 // show route - all public chapters
-// might require pagination
-router.get("/:id/public", (req, res) => {
-  Book.findById(req.params.id).populate({
-    path: "chapters",
-    options: { sort: "number" },
-  }).exec(function(err, foundBook) {
+// this function is probably really inefficient
+// needs to find a better way to do this
+router.get("/:id/public/page/:page_no/sort/:sort_by", (req, res) => {
+  Book.findById(req.params.id, function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
       res.redirect("/books/page/1/sort/title");
     } else {
-      res.render("books/showPublic", { book: foundBook });
+      Chapter.count({ book: { id: foundBook._id }, isPublic: true }, function(err, chapterCount) {
+        if (err) {
+          req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+          res.redirect("/books/page/1/sort/title");
+        } else {
+          Chapter.find({ book: { id: foundBook._id }, isPublic: true }, null, { sort: req.params.sort_by })
+          .skip((req.params.page_no - 1) * itemsPerPage)
+          .limit(itemsPerPage)
+          .exec(function(err, foundChapters) {
+            if (err) {
+              req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+              res.redirect("/books/page/1/sort/title");
+            } else {
+              res.render("books/showPublic", {
+                book: foundBook,
+                chapters: foundChapters,
+                currentPage: req.params.page_no,
+                numPages: Math.ceil(chapterCount / itemsPerPage),
+                sort_by: req.params.sort_by,
+              });
+            }
+          });
+        }
+      });
     }
   });
 });

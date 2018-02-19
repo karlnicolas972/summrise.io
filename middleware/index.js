@@ -39,7 +39,7 @@ middlewareObj.checkChapterOwnership = function(req, res, next) {
         req.flash("error", "This chapter does not exist!");
         res.redirect("/books/" + req.params.id);
       } else {
-        if (foundChapter.author.id.equals(req.user._id)) {
+        if (foundChapter.author.id.equals(req.user._id) || req.user.isAdmin) {
           next();
         } else {
           req.flash("error", "Your user account does not have permission to perform this action.");
