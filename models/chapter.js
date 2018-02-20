@@ -4,6 +4,10 @@ var chapterSchema = new mongoose.Schema({
   number: Number,
   title: String,
   isPublic: Boolean,
+  views: Number,
+  totalRating: Number,
+  numRatings: Number,
+  avgRating: Number,
   summary: String,
   book: {
     id: {

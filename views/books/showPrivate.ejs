@@ -38,7 +38,7 @@
   </div>
 
   <% if (displayedChapters === 0) { %>
-    <div class="ui large message grid">
+    <!-- <div class="ui large message grid">
       <div class="row">
         You currently have no chapter summaries written for <%= book.title %>.
       </div>
@@ -54,6 +54,9 @@
           <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Write your first chapter summary</a>
         </div>
       </div>
+    </div> -->
+    <div class="ui large message">
+      You currently have no chapter summaries written for <%= book.title %>.
     </div>
   <% } %>
 

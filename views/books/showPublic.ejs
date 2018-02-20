@@ -15,7 +15,7 @@
         <div class="menu">
           <a href="/books/<%= book._id %>/public/page/<%= currentPage %>/sort/number" class="item">Chapter Number</a>
           <a href="#" class="item">Most Rated</a>
-          <a href="#" class="item">Most Viewed</a>
+          <a href="/books/<%= book._id %>/public/page/<%= currentPage %>/sort/-views" class="item">Most Viewed</a>
           <a href="/books/<%= book._id %>/public/page/<%= currentPage %>/sort/author.username" class="item">Author</a>
         </div>
       </div>
@@ -66,7 +66,7 @@
   </div>
 
   <% if (numPages < 1 && chapters.length === 0) { %>
-    <div class="ui large message grid">
+    <!-- <div class="ui large message grid">
       <div class="row">
         There are currently no public chapter summaries written for <%= book.title %>.
       </div>
@@ -82,6 +82,9 @@
           <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Write a public chapter summary</a>
         </div>
       </div>
+    </div> -->
+    <div class="ui large message">
+      There are currently no public chapter summaries written for <%= book.title %>.
     </div>
   <% } %>
 

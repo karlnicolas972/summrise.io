@@ -4,6 +4,7 @@ var Book = require("../models/book");
 var Chapter = require("../models/chapter");
 var middleware = require("../middleware");
 var expressSanitizer = require("express-sanitizer");
+var defaultPath = "/books/page/1/sort/title";
 
 // index route - show page for a book
 
@@ -12,7 +13,7 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
   Book.findById(req.params.id).populate("chapters").exec(function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
-      res.redirect("/books/page/1/sort/title");
+      res.redirect(defaultPath);
     } else {
       res.render("chapters/new", { book: foundBook });
     }
@@ -26,6 +27,10 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
     number: req.body.number,
     title: req.body.title,
     isPublic: undefined,
+    views: 0,
+    totalRating: 0,
+    numRatings: 0,
+    avgRating: 0,
     summary: req.body.summary,
     book: {
       id: req.params.id
@@ -65,6 +70,8 @@ router.get("/:chapter_id", middleware.checkChapterOwnership, (req, res) => {
       req.flash("error", "This chapter does not exist!");
       res.redirect("/books/" + req.params.id);
     } else {
+      foundChapter.views++;
+      foundChapter.save();
       res.render("chapters/show", {
         chapter: foundChapter,
         book_id: req.params.id,

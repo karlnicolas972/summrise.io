@@ -1,4 +1,5 @@
 var Chapter = require("../models/chapter");
+var defaultPath = "/books/page/1/sort/title";
 
 var middlewareObj = {};
 
@@ -15,7 +16,7 @@ middlewareObj.isNotLoggedIn = function(req, res, next) {
     return next();
   }
   req.flash("error", "There is already a user account logged in. Please log out first to perform this action.");
-  res.redirect("/books/page/1/sort/title");
+  res.redirect(defaultPath);
 };
 
 middlewareObj.checkAdmin = function(req, res, next) {
@@ -24,7 +25,7 @@ middlewareObj.checkAdmin = function(req, res, next) {
       next();
     } else {
       req.flash("error", "Your user account does not have permission to perform this action.");
-      res.redirect("/books/page/1/sort/title");
+      res.redirect(defaultPath);
     }
   } else {
     req.flash("error", "You are not logged in. Please log in to perform this action.");

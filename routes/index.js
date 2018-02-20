@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require("../models/user");
 var passport = require("passport");
 var middleware = require("../middleware");
+var defaultPath = "/books/page/1/sort/title";
 
 router.get("/", (req, res) => res.render("landing"));
 
@@ -24,10 +25,10 @@ router.post("/register", (req, res) => {
         if (!req.isAuthenticated()) {
           req.flash("success", "You have been successfully registered. Welcome!")
           passport.authenticate("local")(req, res, function() {
-            res.redirect("/books/page/1/sort/title");
+            res.redirect(defaultPath);
           });
         } else {
-          res.redirect("/books/page/1/sort/title");
+          res.redirect(defaultPath);
         }
       }
     });
@@ -40,7 +41,7 @@ router.post("/register", (req, res) => {
 router.get("/login", middleware.isNotLoggedIn, (req, res) => res.render("login", { isLoginOrSignupPage: true }));
 
 router.post("/login", passport.authenticate("local", {
-  successRedirect: "/books/page/1/sort/title",
+  successRedirect: defaultPath,
   failureRedirect: "/login",
   successFlash: "Welcome back!",
   failureFlash: "Invalid username or password.",
