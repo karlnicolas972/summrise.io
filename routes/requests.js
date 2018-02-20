@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var BookRequest = require("../models/request");
 var middleware = require("../middleware");
-var defaultPath = "/books/page/1/sort/title";
+var defaultPath = "/books/page/1/sort/-views";
 
 // index of all book requests
 // only visible to admin

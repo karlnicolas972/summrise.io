@@ -4,7 +4,7 @@ var Book = require("../models/book");
 var Chapter = require("../models/chapter");
 var middleware = require("../middleware");
 var expressSanitizer = require("express-sanitizer");
-var defaultPath = "/books/page/1/sort/title";
+var defaultPath = "/books/page/1/sort/-views";
 
 // index route - show page for a book
 

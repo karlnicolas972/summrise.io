@@ -6,7 +6,7 @@ var Chapter = require("../models/chapter");
 var middleware = require("../middleware");
 var expressSanitizer = require("express-sanitizer");
 var itemsPerPage = 12;
-var defaultPath = "/books/page/1/sort/views";
+var defaultPath = "/books/page/1/sort/-views";
 
 // catcher index routes
 router.get("/", (req, res) => res.redirect(defaultPath));
