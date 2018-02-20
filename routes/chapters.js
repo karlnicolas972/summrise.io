@@ -28,9 +28,6 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
     title: req.body.title,
     isPublic: undefined,
     views: 0,
-    totalRating: 0,
-    numRatings: 0,
-    avgRating: 0,
     summary: req.body.summary,
     book: {
       id: req.params.id

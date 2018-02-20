@@ -65,9 +65,6 @@ router.post("/new", middleware.checkAdmin, (req, res) => {
       author: req.body.author,
       description: req.body.description,
       views: 0,
-      totalRating: 0,
-      numRatings: 0,
-      avgRating: 0,
     };
     Book.create(newBook, function(err, createdBook) {
       if (err) {
@@ -106,9 +103,6 @@ router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
       author: req.body.author,
       description: req.body.description,
       views: 0,
-      totalRating: 0,
-      numRatings: 0,
-      avgRating: 0,
     };
     Book.create(newBook, function(err, createdBook) {
       if (err) {

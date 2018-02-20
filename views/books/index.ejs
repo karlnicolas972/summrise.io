@@ -64,6 +64,10 @@
             </div>
           <% } %>
         </div>
+        <div class="extra">
+          Rating:
+          <div class="ui star rating"></div>
+        </div>
 
         <% if (currentUser && currentUser.isAdmin) { %>
           <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
