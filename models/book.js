@@ -5,9 +5,10 @@ var bookSchema = new mongoose.Schema({
   author: String,
   description: String,
   views: Number,
-  totalRating: Number,
-  numRatings: Number,
-  avgRating: Number,
+  categories: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category"
+  }],
   chapters: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Chapter"
