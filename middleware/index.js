@@ -3,6 +3,11 @@ var defaultPath = "/books/page/1/sort/-views";
 
 var middlewareObj = {};
 
+middlewareObj.defaultError = function(req, res) {
+  req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+  res.redirect(defaultPath);
+}
+
 middlewareObj.isLoggedIn = function(req, res, next) {
   if (req.isAuthenticated()) {
     return next();

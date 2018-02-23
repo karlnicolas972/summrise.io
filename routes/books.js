@@ -8,6 +8,7 @@ var middleware = require("../middleware");
 var expressSanitizer = require("express-sanitizer");
 var itemsPerPage = 12;
 var defaultPath = "/books/page/1/sort/-views";
+var defaultError = middleware.defaultError;
 
 // catcher index routes
 router.get("/", (req, res) => res.redirect(defaultPath));
@@ -18,21 +19,18 @@ router.get("/page/:page_no", (req, res) => res.redirect(`/books/page/${req.param
 router.get("/page/:page_no/sort/:sort_by", (req, res) => {
   Book.count({}, function(err, bookCount) {
     if (err) {
-      req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-      res.redirect(defaultPath);
+      defaultError(req, res);
     } else {
       Genre.find({}, null, { sort: "name"}, function(err, foundGenres) {
         if (err) {
-          req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-          res.redirect(defaultPath);
+          defaultError(req, res);
         } else {
           Book.find({}, null, { sort: req.params.sort_by })
           .skip((req.params.page_no - 1) * itemsPerPage)
           .limit(itemsPerPage)
           .exec(function(err, foundBooks) {
             if (err) {
-              req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-              res.redirect(defaultPath);
+              defaultError(req, res);
             } else {
               res.render("books/index", {
                 books: foundBooks,
@@ -55,8 +53,7 @@ router.get("/search", (req, res) => res.render("books/search", { searchTerm: nul
 router.post("/search", (req, res) => {
   Book.find({ $text: { $search: req.body.searchTerm }}).exec(function(err, foundBooks) {
     if (err) {
-      req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-      res.redirect(defaultPath);
+      defaultError(req, res);
     } else {
       res.render("books/search", {
         books: foundBooks,
@@ -81,9 +78,10 @@ router.post("/new", middleware.checkAdmin, (req, res) => {
     };
     Book.create(newBook, function(err, createdBook) {
       if (err) {
-        req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+        defaultError(req, res);
+      } else {
+        res.redirect(defaultPath);
       }
-      res.redirect(defaultPath);
     });
   } else {
     req.flash("error", "At least one of the fields is empty!")
@@ -119,14 +117,14 @@ router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
     };
     Book.create(newBook, function(err, createdBook) {
       if (err) {
-        req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-        res.redirect(defaultPath);
+        defaultError(req, res);
       } else {
         BookRequest.findByIdAndRemove(req.params.request_id, function(err) {
           if (err) {
-            req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+            defaultError(req, res);
+          } else {
+            res.redirect(defaultPath);
           }
-          res.redirect(defaultPath);
         });
       }
     });
@@ -164,16 +162,14 @@ router.get("/:id/public/page/:page_no/sort/:sort_by", (req, res) => {
     } else {
       Chapter.count({ book: { id: foundBook._id }, isPublic: true }, function(err, chapterCount) {
         if (err) {
-          req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-          res.redirect(defaultPath);
+          defaultError(req, res);
         } else {
           Chapter.find({ book: { id: foundBook._id }, isPublic: true }, null, { sort: req.params.sort_by })
           .skip((req.params.page_no - 1) * itemsPerPage)
           .limit(itemsPerPage)
           .exec(function(err, foundChapters) {
             if (err) {
-              req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-              res.redirect(defaultPath);
+              defaultError(req, res);
             } else {
               foundBook.views++;
               foundBook.save();
@@ -226,7 +222,7 @@ router.delete("/:id", middleware.checkAdmin, (req, res) => {
     } else {
       Chapter.remove({ book: { id: foundBook._id } }, function(err) {
         if (err) {
-          console.log(err);
+          defaultError(req, res);
         } else {
           Book.findByIdAndRemove(req.params.id, function(err) {
             if (err) {

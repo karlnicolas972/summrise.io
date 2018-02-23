@@ -4,6 +4,7 @@ var middleware = require("../middleware");
 var defaultPath = "/books/page/1/sort/-views";
 var Genre = require("../models/genre");
 var Book = require("../models/book");
+var defaultError = middleware.defaultError;
 
 // index route - in books index
 
@@ -22,8 +23,7 @@ var Book = require("../models/book");
 router.get("/new", middleware.checkAdmin, (req, res) => {
   Book.find({}, function(err, foundBooks) {
     if (err) {
-      req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-      res.redirect(defaultPath);
+      defaultError(req, res);
     } else {
       res.render("genres/new", { books: foundBooks });
     }
