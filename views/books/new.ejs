@@ -20,6 +20,11 @@
         <label for="description">Description:</label>
         <textarea name="description" class="editor" placeholder="Short description of the book"></textarea>
       </div>
+      <!-- <div class="field">
+        <select class="ui fluid search dropdown" name="genres" multiple>
+
+        </select>
+      </div> -->
       <button class="ui button">Submit!</button>
     </form>
   <% } else { %>
@@ -31,6 +36,15 @@
       <div class="field">
         <label for="author">Author:</label>
         <input type="text" name="author" placeholder="Author">
+      </div>
+      <div class="field">
+        <label for="genres">Genres:</label>
+        <select class="ui fluid search dropdown" name="genres" multiple>
+          <option value="">Add genres for this book</option>
+          <% genres.forEach(function(genre) { %>
+            <option value="<%= genre._id %>"><%= genre.name %></option>
+          <% }); %>
+        </select>
       </div>
       <div class="field">
         <label for="description">Description:</label>

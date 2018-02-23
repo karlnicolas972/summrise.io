@@ -64,7 +64,15 @@ router.post("/search", (req, res) => {
 });
 
 // new route
-router.get("/new", middleware.checkAdmin, (req, res) => res.render("books/new", { request: null }));
+router.get("/new", middleware.checkAdmin, (req, res) => {
+  Genre.find({}, function(err, foundGenres) {
+    if (err) {
+      defaultError(req, res);
+    } else {
+      res.render("books/new", { request: null, genres: foundGenres });
+    }
+  });
+});
 
 // create route
 router.post("/new", middleware.checkAdmin, (req, res) => {
@@ -74,6 +82,7 @@ router.post("/new", middleware.checkAdmin, (req, res) => {
       title: req.body.title,
       author: req.body.author,
       description: req.body.description,
+      genres: req.body.genres,
       views: 0,
     };
     Book.create(newBook, function(err, createdBook) {
@@ -94,17 +103,23 @@ router.post("/new", middleware.checkAdmin, (req, res) => {
 // before a book is added to the database
 // only admins can create a new book
 router.get("/new/:request_id", middleware.checkAdmin, (req, res) => {
-  BookRequest.findById(req.params.request_id, function(err, foundRequest) {
-    if (err || !foundRequest) {
-      req.flash("error", "This request does not exist!")
-      res.redirect("/books/request/all");
+  Genre.find({}, function(err, foundGenres) {
+    if (err) {
+      defaultError(req, res);
     } else {
-      res.render("books/new", { request: foundRequest });
+      BookRequest.findById(req.params.request_id, function(err, foundRequest) {
+        if (err || !foundRequest) {
+          req.flash("error", "This request does not exist!")
+          res.redirect("/books/request/all");
+        } else {
+          res.render("books/new", { request: foundRequest, genres: foundGenres });
+        }
+      });
     }
   });
 });
 
-// create route
+// create route with request
 // only admins can create a new book
 router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
   req.body.description = req.sanitize(req.body.description);
@@ -113,6 +128,7 @@ router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
       title: req.body.title,
       author: req.body.author,
       description: req.body.description,
+      genres: req.body.genres,
       views: 0,
     };
     Book.create(newBook, function(err, createdBook) {
@@ -139,7 +155,7 @@ router.get("/:id", (req, res) => {
   Book.findById(req.params.id).populate({
     path: "chapters",
     options: { sort: "number" },
-  }).exec(function(err, foundBook) {
+  }).populate("genres").exec(function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
       res.redirect(defaultPath);
@@ -155,7 +171,7 @@ router.get("/:id", (req, res) => {
 // this function is probably really inefficient
 // needs to find a better way to do this
 router.get("/:id/public/page/:page_no/sort/:sort_by", (req, res) => {
-  Book.findById(req.params.id, function(err, foundBook) {
+  Book.findById(req.params.id).populate("genres").exec(function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
       res.redirect(defaultPath);
@@ -224,16 +240,11 @@ router.delete("/:id", middleware.checkAdmin, (req, res) => {
         if (err) {
           defaultError(req, res);
         } else {
-          foundBook.genres.forEach(function(genre) {
-            var bookToBeDeleted = genre.books.indexOf(foundBook._id);
-            genre.books.splice(bookToBeDeleted, 1);
-            genre.save();
-          });
           Book.findByIdAndRemove(req.params.id, function(err) {
             if (err) {
               defaultError(req, res);
             } else {
-              req.flash("success", `${foundBook.title} successfully deleted`);
+              req.flash("success", `"${foundBook.title}" successfully deleted.`);
               res.redirect(defaultPath);
             }
           });

@@ -30,7 +30,7 @@ router.post("/new", middleware.checkAdmin, (req, res) => {
         req.flash("error", "This genre couldn't be created!");
         res.redirect(defaultPath);
       } else {
-        createdGenre.books.forEach(function(book_id) {
+        req.body.genre.books.forEach(function(book_id) {
           Book.findById(book_id, function(err, foundBook) {
             if (err || !foundBook) {
               req.flash("error", "This book does not exist!");
@@ -57,19 +57,25 @@ router.get("/:genre_id/page/:page_no/sort/:sort_by", (req, res) => {
       req.flash("error", "This genre doesn't exist!");
       res.redirect(defaultPath);
     } else {
-      Book.find({ genres: foundGenre._id }, null, { sort: req.params.sort_by })
-      .skip((req.params.page_no - 1) * itemsPerPage)
-      .limit(itemsPerPage)
-      .exec(function(err, foundBooks) {
+      Book.count({ genres: foundGenre._id }, function(err, bookCount) {
         if (err) {
           defaultError(req, res);
         } else {
-          res.render("genres/show", {
-            genre: foundGenre,
-            books: foundBooks,
-            currentPage: req.params.page_no,
-            numPages: Math.ceil(foundGenre.books.length / itemsPerPage),
-            sort_by: req.params.sort_by,
+          Book.find({ genres: foundGenre._id }, null, { sort: req.params.sort_by })
+          .skip((req.params.page_no - 1) * itemsPerPage)
+          .limit(itemsPerPage)
+          .exec(function(err, foundBooks) {
+            if (err) {
+              defaultError(req, res);
+            } else {
+              res.render("genres/show", {
+                genre: foundGenre,
+                books: foundBooks,
+                currentPage: req.params.page_no,
+                numPages: Math.ceil(bookCount / itemsPerPage),
+                sort_by: req.params.sort_by,
+              });
+            }
           });
         }
       });
