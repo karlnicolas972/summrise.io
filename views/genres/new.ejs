@@ -14,7 +14,7 @@
 
     <div class="field">
       <label for="genre[books]">Add books:</label>
-      <select class="ui fluid dropdown" name="genre[books]" multiple>
+      <select class="ui fluid search dropdown" name="genre[books]" multiple>
         <option value="">Add books within this genre</option>
         <% books.forEach(function(book) { %>
           <option value="<%= book._id %>"><%= book.title %></option>

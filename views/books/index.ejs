@@ -7,10 +7,11 @@
       <h1>Browse Our Books</h1>
     </div>
     <% if (currentUser && currentUser.isAdmin) { %>
-      <p>Here is the collection of books in our database. To view (and approve or delete) requests submitted by our users, click the "View requests" button below.</p>
-      <div class="ui buttons">
-        <a href="/books/new" class="ui blue button">Add new book</a>
-        <a href="/books/request/all" class="ui teal button">View requests</a>
+      <p>Here is the collection of books in our database. To view (and approve or delete) requests submitted by our users, click the "Requests" button below.</p>
+      <div class="ui small buttons">
+        <a href="/books/new" class="ui blue button"><i class="plus icon"></i>Book</a>
+        <a href="/books/genres/new" class="ui green button"><i class="plus icon"></i>Genre</a>
+        <a href="/books/request/all" class="ui teal button">Requests</a>
       </div>
     <% } else { %>
       <p>Here is the collection of books in our database. Want to write a chapter summary for a book that isn't here? Request a new book using the link below.</p>
@@ -26,14 +27,13 @@
           <a href="/books/page/<%= currentPage %>/sort/author" class="item">Author</a>
           <a href="/books/page/<%= currentPage %>/sort/title" class="item">Title</a>
           <a href="/books/page/<%= currentPage %>/sort/-views" class="item">Most Viewed</a>
-          <a href="#" class="item">Most Rated</a>
         </div>
       </div>
       <div class="item ui dropdown">
         <div class="text">Genres</div><i class="dropdown icon"></i>
         <div class="menu">
           <% genres.forEach(function(genre) { %>
-            <a href="#" class="item"><%= genre.name %></a>
+            <a href="/books/genres/<%= genre._id %>/page/1/sort/title" class="item"><%= genre.name %></a>
           <% }); %>
         </div>
       </div>
@@ -99,7 +99,6 @@
           <a href="/books/page/<%= currentPage %>/sort/author" class="item">Author</a>
           <a href="/books/page/<%= currentPage %>/sort/title" class="item">Title</a>
           <a href="/books/page/<%= currentPage %>/sort/-views" class="item">Most Viewed</a>
-          <a href="#" class="item">Most Rated</a>
         </div>
       </div>
       <span class="item">Page: </span>

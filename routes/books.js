@@ -215,7 +215,7 @@ router.put("/:id", middleware.checkAdmin, (req, res) => {
 });
 
 router.delete("/:id", middleware.checkAdmin, (req, res) => {
-  Book.findById(req.params.id, function(err, foundBook) {
+  Book.findById(req.params.id).populate("genres").exec(function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
       res.redirect(defaultPath);
@@ -224,11 +224,18 @@ router.delete("/:id", middleware.checkAdmin, (req, res) => {
         if (err) {
           defaultError(req, res);
         } else {
+          foundBook.genres.forEach(function(genre) {
+            var bookToBeDeleted = genre.books.indexOf(foundBook._id);
+            genre.books.splice(bookToBeDeleted, 1);
+            genre.save();
+          });
           Book.findByIdAndRemove(req.params.id, function(err) {
             if (err) {
-              req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+              defaultError(req, res);
+            } else {
+              req.flash("success", `${foundBook.title} successfully deleted`);
+              res.redirect(defaultPath);
             }
-            res.redirect(defaultPath);
           });
         }
       });
