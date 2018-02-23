@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var categorySchema = new mongoose.Schema({
+var genreSchema = new mongoose.Schema({
   name: String,
   books: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -8,4 +8,4 @@ var categorySchema = new mongoose.Schema({
   }],
 });
 
-module.exports = mongoose.model("Category", categorySchema);
+module.exports = mongoose.model("Genre", genreSchema);

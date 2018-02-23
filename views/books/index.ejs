@@ -29,6 +29,14 @@
           <a href="#" class="item">Most Rated</a>
         </div>
       </div>
+      <div class="item ui dropdown">
+        <div class="text">Genres</div><i class="dropdown icon"></i>
+        <div class="menu">
+          <% genres.forEach(function(genre) { %>
+            <a href="#" class="item"><%= genre.name %></a>
+          <% }); %>
+        </div>
+      </div>
       <span class="item">Page: </span>
       <% for (var i = 1; i <= numPages; i++) { %>
         <% if (currentPage == i) { %>

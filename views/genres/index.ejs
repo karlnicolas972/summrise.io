@@ -1,0 +1,40 @@
+<% include ../partials/header %>
+
+<div class="ui main container">
+  <div class="ui message">
+    <h1 class="ui huge header">Browse Genres</h1>
+    <p>Here are all the book genres available in our database. Click on any genre to see all the books within that genre.</p>
+  </div>
+
+  <br>
+
+  <div class="ui doubling stackable four cards">
+    <% genres.forEach(function(genre) { %>
+      <div class="card">
+        <div class="content">
+          <a href="#" class="center aligned massive header">
+            <%= genre.name %>
+          </a>
+        </div>
+
+
+        <% if (currentUser && currentUser.isAdmin) { %>
+          <form class="extra content" action="#" method="POST">
+            <div class="ui three buttons">
+              <a href="#" class="ui blue basic button">Edit</a>
+              <a href="#" class="ui basic teal button">View</a>
+              <input type="submit" class="ui red basic button delete-btn" value="Delete">
+            </div>
+          </form>
+        <% } else { %>
+          <div class="extra content">
+            <a class="ui fluid teal button" href="#">View Books</a>
+          </div>
+        <% } %>
+      </div>
+    <% }); %>
+  </div>
+
+</div>
+
+<% include ../partials/footer %>

@@ -16,6 +16,7 @@ var indexRoutes = require("./routes/index");
 var bookRoutes = require("./routes/books");
 var bookRequestRoutes = require("./routes/requests");
 var chapterRoutes = require("./routes/chapters");
+var genreRoutes = require("./routes/genres");
 
 // app config
 mongoose.connect(databaseURL);
@@ -49,6 +50,7 @@ app.use(function(req, res, next) {
 });
 
 app.use("/books/request", bookRequestRoutes);
+app.use("/books/genres", genreRoutes);
 app.use("/books/:id/chapters", chapterRoutes);
 app.use("/books", bookRoutes);
 app.use(indexRoutes);

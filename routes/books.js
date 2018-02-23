@@ -3,6 +3,7 @@ var router = express.Router();
 var Book = require("../models/book");
 var BookRequest = require("../models/request");
 var Chapter = require("../models/chapter");
+var Genre = require("../models/genre");
 var middleware = require("../middleware");
 var expressSanitizer = require("express-sanitizer");
 var itemsPerPage = 12;
@@ -13,22 +14,34 @@ router.get("/", (req, res) => res.redirect(defaultPath));
 router.get("/page/:page_no", (req, res) => res.redirect(`/books/page/${req.params.page_no}/sort/title`));
 
 // sorted paginated index route
+// might need refactoring soon
 router.get("/page/:page_no/sort/:sort_by", (req, res) => {
   Book.count({}, function(err, bookCount) {
     if (err) {
       req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-      res.redirect("back");
+      res.redirect(defaultPath);
     } else {
-      Book.find({}, null, { sort: req.params.sort_by }).skip((req.params.page_no - 1) * itemsPerPage).limit(itemsPerPage).exec(function(err, foundBooks) {
+      Genre.find({}, null, { sort: "name"}, function(err, foundGenres) {
         if (err) {
           req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
           res.redirect(defaultPath);
         } else {
-          res.render("books/index", {
-            books: foundBooks,
-            numPages: Math.ceil(bookCount / itemsPerPage),
-            currentPage: req.params.page_no,
-            sort_by: req.params.sort_by,
+          Book.find({}, null, { sort: req.params.sort_by })
+          .skip((req.params.page_no - 1) * itemsPerPage)
+          .limit(itemsPerPage)
+          .exec(function(err, foundBooks) {
+            if (err) {
+              req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
+              res.redirect(defaultPath);
+            } else {
+              res.render("books/index", {
+                books: foundBooks,
+                genres: foundGenres,
+                numPages: Math.ceil(bookCount / itemsPerPage),
+                currentPage: req.params.page_no,
+                sort_by: req.params.sort_by,
+              });
+            }
           });
         }
       });
