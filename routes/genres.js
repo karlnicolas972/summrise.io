@@ -85,7 +85,7 @@ router.get("/:genre_id/page/:page_no/sort/:sort_by", (req, res) => {
 });
 
 // edit page
-router.get("/:genre_id/edit", (req, res) => {
+router.get("/:genre_id/edit", middleware.checkAdmin, (req, res) => {
   Genre.findById(req.params.genre_id, function(err, foundGenre) {
     if (err || !foundGenre) {
       req.flash("error", "This genre doesn't exist!");
@@ -97,7 +97,7 @@ router.get("/:genre_id/edit", (req, res) => {
 });
 
 // update route
-router.put("/:genre_id/", (req, res) => {
+router.put("/:genre_id/", middleware.checkAdmin, (req, res) => {
   Genre.findByIdAndUpdate(req.params.genre_id, req.body.genre, function(err, updatedGenre) {
     if (err || !updatedGenre) {
       req.flash("error", "This genre does not exist!");
@@ -108,7 +108,7 @@ router.put("/:genre_id/", (req, res) => {
   });
 });
 
-router.delete("/:genre_id", (req, res) => {
+router.delete("/:genre_id", middleware.checkAdmin, (req, res) => {
   Genre.findById(req.params.genre_id, function(err, foundGenre) {
     if (err || !foundGenre) {
       req.flash("error", "This genre doesn't exist!");
