@@ -64,10 +64,12 @@
 <!-- This script tag is under the footer because it requires jQuery
 and the footer has jQuery, so it needs jQuery to load first -->
 
-<script>
-var selectedGenres = [];
-<% request.genres.forEach(function(genre) { %>
-  selectedGenres.push("<%= genre.name %>")
-<% }); %>
-$('.ui.dropdown.request').dropdown('set selected', selectedGenres);
-</script>
+<% if (request) { %>
+  <script>
+  var selectedGenres = [];
+  <% request.genres.forEach(function(genre) { %>
+    selectedGenres.push("<%= genre.name %>")
+  <% }); %>
+  $('.ui.dropdown.request').dropdown('set selected', selectedGenres);
+  </script>
+<% } %>
