@@ -1,8 +1,10 @@
 var express = require("express");
 var router = express.Router();
 var BookRequest = require("../models/request");
+var Genre = require("../models/genre");
 var middleware = require("../middleware");
 var defaultPath = "/books/page/1/sort/-views";
+var defaultError = middleware.defaultError;
 
 // index of all book requests
 // only visible to admin
@@ -19,13 +21,22 @@ router.get("/all", middleware.checkAdmin, (req, res) => {
 
 // book request route
 // anyone can request a book
-router.get("/", middleware.isLoggedIn, (req, res) => res.render("book_requests/new"));
+router.get("/", middleware.isLoggedIn, (req, res) => {
+  Genre.find({}, null, { sort: "name" }, function(err, foundGenres) {
+    if (err) {
+      defaultError(req, res);
+    } else {
+      res.render("book_requests/new", { genres: foundGenres });
+    }
+  });
+});
 
 router.post("/", middleware.isLoggedIn, (req, res) => {
   if (req.body.title && req.body.author) {
     var newRequest = {
       title: req.body.title,
       author: req.body.author,
+      genres: req.body.genres,
     };
     BookRequest.create(newRequest, function(err, createdRequest) {
       if (err || !createdRequest) {

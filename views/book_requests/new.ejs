@@ -15,6 +15,15 @@
       <label for="author">Author:</label>
       <input type="text" name="author" placeholder="Author">
     </div>
+    <div class="field">
+      <label for="genres">Genres:</label>
+      <select class="ui fluid search dropdown" name="genres" multiple>
+        <option value="">Suggest possible genres for this book</option>
+        <% genres.forEach(function(genre) { %>
+          <option value="<%= genre._id %>"><%= genre.name %></option>
+        <% }); %>
+      </select>
+    </div>
     <button class="ui button">Request this book!</button>
   </form>
 

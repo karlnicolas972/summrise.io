@@ -15,6 +15,15 @@
       <input type="text" name="book[author]" value="<%= book.author %>">
     </div>
     <div class="field">
+      <label for="genres">Genres:</label>
+      <select class="ui fluid search dropdown request" name="book[genres]" multiple>
+        <option value="">Add genres for this book</option>
+        <% genres.forEach(function(genre) { %>
+          <option value="<%= genre._id %>"><%= genre.name %></option>
+        <% }); %>
+      </select>
+    </div>
+    <div class="field">
       <label for="description">Description:</label>
       <textarea name="book[description]" class="editor"><%- book.description %></textarea>
     </div>
@@ -23,3 +32,14 @@
 </div>
 
 <% include ../partials/footer %>
+
+<!-- This script tag is under the footer because it requires jQuery
+and the footer has jQuery, so it needs jQuery to load first -->
+
+<script>
+var selectedGenres = [];
+<% book.genres.forEach(function(genre) { %>
+  selectedGenres.push("<%= genre.name %>");
+<% }); %>
+$('.ui.dropdown.request').dropdown('set selected', selectedGenres);
+</script>

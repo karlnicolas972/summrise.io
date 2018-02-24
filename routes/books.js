@@ -107,7 +107,9 @@ router.get("/new/:request_id", middleware.checkAdmin, (req, res) => {
     if (err) {
       defaultError(req, res);
     } else {
-      BookRequest.findById(req.params.request_id, function(err, foundRequest) {
+      BookRequest.findById(req.params.request_id)
+      .populate("genres")
+      .exec(function(err, foundRequest) {
         if (err || !foundRequest) {
           req.flash("error", "This request does not exist!")
           res.redirect("/books/request/all");
@@ -209,12 +211,18 @@ router.get("/:id/public", (req, res) => res.redirect(`/books/${req.params.id}/pu
 
 // edit route
 router.get("/:id/edit", middleware.checkAdmin, (req, res) => {
-  Book.findById(req.params.id, function(err, foundBook) {
-    if (err || !foundBook) {
-      req.flash("error", "This book does not exist!");
-      res.redirect(defaultPath);
+  Genre.find({}, function(err, foundGenres) {
+    if (err) {
+      defaultError(req, res);
     } else {
-      res.render("books/edit", { book: foundBook });
+      Book.findById(req.params.id).populate("genres").exec(function(err, foundBook) {
+        if (err || !foundBook) {
+          req.flash("error", "This book does not exist!");
+          res.redirect(defaultPath);
+        } else {
+          res.render("books/edit", { book: foundBook, genres: foundGenres });
+        }
+      });
     }
   });
 });
