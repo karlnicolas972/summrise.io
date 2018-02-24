@@ -60,15 +60,10 @@
     </div>
   </div>
 
-  <div class="ui grid">
-    <div class="column">
-      <label class="ui header"><strong>Genres:</strong></label>
-    </div>
-    <% book.genres.forEach(function(genre) { %>
-      <div class="column">
-        <a href="/books/genres/<%= genre._id %>/page/1/sort/title" class="ui label"><%= genre.name %></a>
-      </div>
-    <% }); %>
-  </div>
+  <br>
+  <label><strong>Tags: </strong></label>
+  <% book.genres.forEach(function(genre) { %>
+      <a href="/books/genres/<%= genre._id %>/page/1/sort/title" class="ui tag label"><%= genre.name %></a>
+  <% }); %>
 
 </div>

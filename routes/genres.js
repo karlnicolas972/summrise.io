@@ -51,6 +51,7 @@ router.post("/new", middleware.checkAdmin, (req, res) => {
   }
 });
 
+// show page
 router.get("/:genre_id/page/:page_no/sort/:sort_by", (req, res) => {
   Genre.findById(req.params.genre_id, function(err, foundGenre) {
     if (err || !foundGenre) {
@@ -83,5 +84,56 @@ router.get("/:genre_id/page/:page_no/sort/:sort_by", (req, res) => {
   });
 });
 
+// edit page
+router.get("/:genre_id/edit", (req, res) => {
+  Genre.findById(req.params.genre_id, function(err, foundGenre) {
+    if (err || !foundGenre) {
+      req.flash("error", "This genre doesn't exist!");
+      res.redirect(defaultPath);
+    } else {
+      res.render("genres/edit", { genre: foundGenre });
+    }
+  });
+});
+
+// update route
+router.put("/:genre_id/", (req, res) => {
+  Genre.findByIdAndUpdate(req.params.genre_id, req.body.genre, function(err, updatedGenre) {
+    if (err || !updatedGenre) {
+      req.flash("error", "This genre does not exist!");
+      res.redirect(defaultPath);
+    } else {
+      res.redirect(`/books/genres/${req.params.genre_id}/page/1/sort/title`);
+    }
+  });
+});
+
+router.delete("/:genre_id", (req, res) => {
+  Genre.findById(req.params.genre_id, function(err, foundGenre) {
+    if (err || !foundGenre) {
+      req.flash("error", "This genre doesn't exist!");
+      res.redirect(defaultPath);
+    } else {
+      Book.find({ genres: foundGenre._id }, function(err, foundBooks) {
+        if (err || !foundBooks) {
+          defaultError(req, res);
+        } else {
+          foundBooks.forEach(function(book) {
+            var genreToDelete = book.genres.indexOf(foundGenre._id);
+            book.genres.splice(genreToDelete, 1);
+            book.save();
+          });
+          Genre.findByIdAndRemove(foundGenre._id, function(err) {
+            if (err) {
+              defaultError(req, res);
+            } else {
+              res.redirect(defaultPath);
+            }
+          });
+        }
+      });
+    }
+  })
+});
 
 module.exports = router;

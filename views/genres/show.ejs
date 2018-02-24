@@ -5,6 +5,14 @@
     <a href="/books">All Books</a> > <%= genre.name %> Books
   </div>
 
+  <% if (currentUser && currentUser.isAdmin) { %>
+    <form action="/books/genres/<%= genre._id %>?_method=DELETE" method="POST">
+      <a href="/books/genres/<%= genre._id %>/edit" class="ui basic blue button">Edit Genre Name</a>
+      <button class="ui basic red button delete-btn">Delete Genre</button>
+    </form>
+    <br>
+  <% } %>
+
   <% if (numPages > 0) { %>
     <div class="ui small pagination menu">
       <div class="item ui dropdown">
