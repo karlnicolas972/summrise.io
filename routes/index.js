@@ -43,7 +43,7 @@ router.get("/login", middleware.isNotLoggedIn, (req, res) => res.render("login",
 router.post("/login", passport.authenticate("local", {
   successRedirect: defaultPath,
   failureRedirect: "/login",
-  successFlash: "Welcome back!",
+  successFlash: `Hey, welcome back!`,
   failureFlash: "Invalid username or password.",
 }), (req, res) => { /* empty function */ });
 

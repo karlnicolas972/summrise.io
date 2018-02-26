@@ -150,9 +150,6 @@ router.post("/new", middleware.checkAdmin, (req, res) => {
 });
 
 // new route with request
-// takes a book request and asks for more information from admins
-// before a book is added to the database
-// only admins can create a new book
 router.get("/new/:request_id", middleware.checkAdmin, (req, res) => {
   Genre.find({}, function(err, foundGenres) {
     if (err) {
@@ -173,7 +170,6 @@ router.get("/new/:request_id", middleware.checkAdmin, (req, res) => {
 });
 
 // create route with request
-// only admins can create a new book
 router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
   req.body.description = req.sanitize(req.body.description);
   if (req.body.title && req.body.author && req.body.description) {
@@ -203,38 +199,40 @@ router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
   }
 });
 
-// show route - only user's chapters
+// show route - both private and public chapters
 router.get("/:id", (req, res) => {
-  Book.findById(req.params.id).populate({
-    path: "chapters",
-    options: { sort: "number" },
-  }).populate("genres").exec(function(err, foundBook) {
+  var page = req.query.page || 1;
+  var sort_by = req.query.sort || "number";
+  var isPublic = false;
+  var chapterQuery;
+  Book.findById(req.params.id)
+  .populate("genres")
+  .exec(function(err, foundBook) {
     if (err || !foundBook) {
       req.flash("error", "This book does not exist!");
       res.redirect(defaultPath);
     } else {
-      foundBook.views++;
-      foundBook.save();
-      res.render("books/showPrivate", { book: foundBook });
-    }
-  });
-});
-
-// show route - all public chapters
-// this function is probably really inefficient
-// needs to find a better way to do this
-router.get("/:id/public/page/:page_no/sort/:sort_by", (req, res) => {
-  Book.findById(req.params.id).populate("genres").exec(function(err, foundBook) {
-    if (err || !foundBook) {
-      req.flash("error", "This book does not exist!");
-      res.redirect(defaultPath);
-    } else {
-      Chapter.count({ book: { id: foundBook._id }, isPublic: true }, function(err, chapterCount) {
+      if (req.query.public) {
+        chapterQuery = { book: { id: foundBook._id }, isPublic: true };
+        isPublic = true;
+      } else if (req.isAuthenticated()) {
+        chapterQuery = { book: { id: foundBook._id }, author: { id: req.user._id, username: req.user.username } };
+      } else {
+        return res.render("books/show", {
+          book: foundBook,
+          chapters: null,
+          currentPage: page,
+          numPages: 0,
+          sort_by: sort_by,
+          isPublic: isPublic,
+        });
+      }
+      Chapter.count(chapterQuery, function(err, chapterCount) {
         if (err) {
           defaultError(req, res);
         } else {
-          Chapter.find({ book: { id: foundBook._id }, isPublic: true }, null, { sort: req.params.sort_by })
-          .skip((req.params.page_no - 1) * itemsPerPage)
+          Chapter.find(chapterQuery, null, { sort: sort_by })
+          .skip((page - 1) * itemsPerPage)
           .limit(itemsPerPage)
           .exec(function(err, foundChapters) {
             if (err) {
@@ -242,12 +240,13 @@ router.get("/:id/public/page/:page_no/sort/:sort_by", (req, res) => {
             } else {
               foundBook.views++;
               foundBook.save();
-              res.render("books/showPublic", {
+              res.render("books/show", {
                 book: foundBook,
                 chapters: foundChapters,
-                currentPage: req.params.page_no,
+                currentPage: page,
                 numPages: Math.ceil(chapterCount / itemsPerPage),
-                sort_by: req.params.sort_by,
+                sort_by: sort_by,
+                isPublic: isPublic,
               });
             }
           });
@@ -256,9 +255,6 @@ router.get("/:id/public/page/:page_no/sort/:sort_by", (req, res) => {
     }
   });
 });
-
-// catcher route for public show page
-router.get("/:id/public", (req, res) => res.redirect(`/books/${req.params.id}/public/page/1/sort/number`));
 
 // edit route
 router.get("/:id/edit", middleware.checkAdmin, (req, res) => {

@@ -19,14 +19,14 @@
           <a href="#" class="ui yellow buy button">Buy this book!</a>
           <a href="/books/<%= book._id %>/chapters/new" class="ui green button">New chapter</a>
           <a href="/books/<%= book._id %>" class="ui teal button">My chapters</a>
-          <a href="/books/<%= book._id %>/public/page/1/sort/number" class="ui orange button">Public chapters</a>
+          <a href="/books/<%= book._id %>?public=true&page=1&sort=number" class="ui orange button">Public chapters</a>
           <input type="submit" class="ui red button delete-btn" value="Delete">
         </form>
       <% } else { %>
         <a href="#" class="ui yellow buy button">Buy this book!</a>
         <a href="/books/<%= book._id %>/chapters/new" class="ui green button">New chapter</a>
         <a href="/books/<%= book._id %>" class="ui teal button">My chapters</a>
-        <a href="/books/<%= book._id %>/public/page/1/sort/number" class="ui orange button">Public chapters</a>
+        <a href="/books/<%= book._id %>?public=true&page=1&sort=number" class="ui orange button">Public chapters</a>
       <% } %>
     </div>
     <div class="mobile only row">
@@ -50,12 +50,12 @@
       <% if (currentUser && currentUser.isAdmin) { %>
         <div class="ui buttons">
           <a href="/books/<%= book._id %>" class="ui teal button">My chapters</a>
-          <a href="/books/<%= book._id %>/public/page/1/sort/number" class="ui orange button">Public chapters</a>
+          <a href="/books/<%= book._id %>?public=true&page=1&sort=number" class="ui orange button">Public chapters</a>
         </div>
       <% } else { %>
         <div class="ui buttons">
           <a href="/books/<%= book._id %>" class="ui teal button">My chapters</a>
-          <a href="/books/<%= book._id %>/public/page/1/sort/number" class="ui orange button">Public chapters</a>
+          <a href="/books/<%= book._id %>?public=true&page=1&sort=number" class="ui orange button">Public chapters</a>
         </div>
       <% } %>
     </div>
