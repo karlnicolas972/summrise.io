@@ -48,19 +48,21 @@ router.get("/page/:page_no/sort/:sort_by", (req, res) => {
 });
 
 // search routes
-router.get("/search", (req, res) => res.render("books/search", { searchTerm: null, books: [] }));
-
-router.post("/search", (req, res) => {
-  Book.find({ $text: { $search: req.body.searchTerm }}).exec(function(err, foundBooks) {
-    if (err) {
-      defaultError(req, res);
-    } else {
-      res.render("books/search", {
-        books: foundBooks,
-        searchTerm: req.body.searchTerm
-      });
-    }
-  });
+router.get("/search", (req, res) => {
+  if (req.query.key) {
+    Book.find({ $text: { $search: req.query.key }}).exec(function(err, foundBooks) {
+      if (err) {
+        defaultError(req, res);
+      } else {
+        res.render("books/search", {
+          books: foundBooks,
+          searchTerm: req.query.key
+        });
+      }
+    });
+  } else {
+    res.render("books/search", { searchTerm: null, books: [] });
+  }
 });
 
 // add to favourites route

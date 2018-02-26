@@ -3,12 +3,10 @@
 <div class="ui main container">
 
   <div class="ui large message">
-    <% if (searchTerm) { %>
-      <h1>Book search results for "<%= searchTerm %>":</h1>
-      <p>Didn't find what you were looking for?</p>
-    <% } %>
-    <form class="ui fluid action icon input" action="/books/search" method="POST">
-      <input type="text" name="searchTerm" placeholder="<%= (searchTerm) ? 'Try again...' : 'Search for a book...' %>">
+    <h1>Book search results for "<%= searchTerm %>":</h1>
+    <p>Didn't find what you were looking for?</p>
+    <form class="ui fluid action icon input" action="/books/search" method="GET">
+      <input type="text" name="key" placeholder="<%= (searchTerm) ? 'Try again...' : 'Search for a book...' %>">
       <button class="ui icon button"><i class="search icon"></i></button>
     </form>
   </div>
