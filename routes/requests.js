@@ -3,7 +3,7 @@ var router = express.Router();
 var BookRequest = require("../models/request");
 var Genre = require("../models/genre");
 var middleware = require("../middleware");
-var defaultPath = "/books/page/1/sort/-views";
+var defaultPath = "/books";
 var defaultError = middleware.defaultError;
 
 // index of all book requests

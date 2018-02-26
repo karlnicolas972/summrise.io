@@ -18,17 +18,17 @@
       <div class="item ui dropdown">
         <div class="text">Sort by</div><i class="dropdown icon"></i>
         <div class="menu">
-          <a href="/books/genres/<%= genre._id %>/page/<%= currentPage %>/sort/author" class="item">Author</a>
-          <a href="/books/genres/<%= genre._id %>/page/<%= currentPage %>/sort/title" class="item">Title</a>
-          <a href="/books/genres/<%= genre._id %>/page/<%= currentPage %>/sort/-views" class="item">Most Viewed</a>
+          <a href="/books/genres/<%= genre._id %>?page=<%= currentPage %>&sort=author" class="item">Author</a>
+          <a href="/books/genres/<%= genre._id %>?page=<%= currentPage %>&sort=title" class="item">Title</a>
+          <a href="/books/genres/<%= genre._id %>?page=<%= currentPage %>&sort=-views" class="item">Most Viewed</a>
         </div>
       </div>
       <span class="item">Page: </span>
       <% for (var i = 1; i <= numPages; i++) { %>
         <% if (currentPage == i) { %>
-          <a href="/books/genres/<%= genre._id %>/page/<%= i %>/sort/<%= sort_by %>" class="active item"><%= i %></a>
+          <a href="/books/genres/<%= genre._id %>?page=<%= i %>&sort=<%= sort_by %>" class="active item"><%= i %></a>
         <% } else { %>
-          <a href="/books/genres/<%= genre._id %>/page/<%= i %>/sort/<%= sort_by %>" class="item"><%= i %></a>
+          <a href="/books/genres/<%= genre._id %>?page=<%= i %>&sort=<%= sort_by %>" class="item"><%= i %></a>
         <% } %>
       <% } %>
     </div>

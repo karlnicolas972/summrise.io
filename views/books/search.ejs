@@ -3,18 +3,45 @@
 <div class="ui main container">
 
   <div class="ui large message">
-    <h1>Book search results for "<%= searchTerm %>":</h1>
-    <p>Didn't find what you were looking for?</p>
+    <% if (searchTerm) { %>
+      <h1>Book search results for "<%= searchTerm %>":</h1>
+      <p>Didn't find what you were looking for?</p>
+    <% } else { %>
+      <h1>Looking for a specific book?</h1>
+    <% } %>
     <form class="ui fluid action icon input" action="/books/search" method="GET">
       <input type="text" name="key" placeholder="<%= (searchTerm) ? 'Try again...' : 'Search for a book...' %>">
       <button class="ui icon button"><i class="search icon"></i></button>
     </form>
   </div>
 
-  <br>
-
   <% if (searchTerm && books && books.length === 0) { %>
-    <p>No results found. Please recheck your query and try again. If the book you are looking for isn't found, <a href="/books/request">request it here</a> and it will be added to our database shortly.</p>
+    <div class="ui message">
+      <p>No results found. Please recheck your query and try again. If the book you are looking for isn't found, <a href="/books/request">request it here</a> and it will be added to our database shortly.</p>
+    </div>
+  <% } %>
+
+  <% if (numPages > 0) { %>
+    <div class="ui small pagination menu">
+      <div class="item ui dropdown">
+        <div class="text">Sort by</div><i class="dropdown icon"></i>
+        <div class="menu">
+          <a href="/books/search?key=<%= searchTerm %>&page=<%= currentPage %>&sort=author" class="item">Author</a>
+          <a href="/books/search?key=<%= searchTerm %>&page=<%= currentPage %>&sort=title" class="item">Title</a>
+          <a href="/books/search?key=<%= searchTerm %>&page=<%= currentPage %>&sort=-views" class="item">Most Viewed</a>
+        </div>
+      </div>
+      <span class="item">Page: </span>
+      <% for (var i = 1; i <= numPages; i++) { %>
+        <% if (currentPage == i) { %>
+          <a href="/books/search?key=<%= searchTerm %>&page=<%= i %>&sort=<%= sort_by %>" class="active item"><%= i %></a>
+        <% } else { %>
+          <a href="/books/search?key=<%= searchTerm %>&page=<%= i %>&sort=<%= sort_by %>" class="item"><%= i %></a>
+        <% } %>
+      <% } %>
+    </div>
+    <br>
+    <br>
   <% } %>
 
   <% include ../partials/books/index %>

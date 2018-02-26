@@ -1,3 +1,4 @@
+<!-- preconditions: requires book -->
 <div class="ui segment">
   <div class="ui header">
     <h1><%= book.title %></h1>
@@ -63,7 +64,7 @@
   <br>
   <label><strong>Tags: </strong></label>
   <% book.genres.forEach(function(genre) { %>
-      <a href="/books/genres/<%= genre._id %>/page/1/sort/title" class="ui tag label"><%= genre.name %></a>
+      <a href="/books/genres/<%= genre._id %>" class="ui tag label"><%= genre.name %></a>
   <% }); %>
 
 </div>

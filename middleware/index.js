@@ -1,5 +1,5 @@
 var Chapter = require("../models/chapter");
-var defaultPath = "/books/page/1/sort/-views";
+var defaultPath = "/books";
 
 var middlewareObj = {};
 

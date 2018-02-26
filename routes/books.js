@@ -7,26 +7,23 @@ var Genre = require("../models/genre");
 var middleware = require("../middleware");
 var expressSanitizer = require("express-sanitizer");
 var itemsPerPage = 12;
-var defaultPath = "/books/page/1/sort/-views";
+var defaultPath = "/books";
 var defaultError = middleware.defaultError;
 
-// catcher index routes
-router.get("/", (req, res) => res.redirect(defaultPath));
-router.get("/page/:page_no", (req, res) => res.redirect(`/books/page/${req.params.page_no}/sort/title`));
-
 // sorted paginated index route
-// might need refactoring soon
-router.get("/page/:page_no/sort/:sort_by", (req, res) => {
+router.get("/", (req, res) => {
+  var page = req.query.page || 1;
+  var sort_by = req.query.sort || "-views";
   Book.count({}, function(err, bookCount) {
     if (err) {
       defaultError(req, res);
     } else {
-      Genre.find({}, null, { sort: "name"}, function(err, foundGenres) {
+      Genre.find({}, null, { sort: "name" }, function(err, foundGenres) {
         if (err) {
           defaultError(req, res);
         } else {
-          Book.find({}, null, { sort: req.params.sort_by })
-          .skip((req.params.page_no - 1) * itemsPerPage)
+          Book.find({}, null, { sort: sort_by })
+          .skip((page - 1) * itemsPerPage)
           .limit(itemsPerPage)
           .exec(function(err, foundBooks) {
             if (err) {
@@ -36,8 +33,8 @@ router.get("/page/:page_no/sort/:sort_by", (req, res) => {
                 books: foundBooks,
                 genres: foundGenres,
                 numPages: Math.ceil(bookCount / itemsPerPage),
-                currentPage: req.params.page_no,
-                sort_by: req.params.sort_by,
+                currentPage: page,
+                sort_by: sort_by,
               });
             }
           });
@@ -47,21 +44,41 @@ router.get("/page/:page_no/sort/:sort_by", (req, res) => {
   });
 });
 
-// search routes
+// sorted paginated search routes
 router.get("/search", (req, res) => {
   if (req.query.key) {
-    Book.find({ $text: { $search: req.query.key }}).exec(function(err, foundBooks) {
+    var page = req.query.page || 1;
+    var sort_by = req.query.sort || "-views";
+    Book.count({ $text: { $search: req.query.key }}, function(err, bookCount) {
       if (err) {
         defaultError(req, res);
       } else {
-        res.render("books/search", {
-          books: foundBooks,
-          searchTerm: req.query.key
+        Genre.find({}, null, { sort: "name" }, function(err, foundGenres) {
+          if (err) {
+            defaultError(req, res);
+          } else {
+            Book.find({ $text: { $search: req.query.key }}, null, { sort: sort_by })
+            .skip((page - 1) * itemsPerPage)
+            .limit(itemsPerPage)
+            .exec(function(err, foundBooks) {
+              if (err) {
+                defaultError(req, res);
+              } else {
+                res.render("books/search", {
+                  books: foundBooks,
+                  searchTerm: req.query.key,
+                  numPages: Math.ceil(bookCount / itemsPerPage),
+                  currentPage: page,
+                  sort_by: sort_by,
+                });
+              }
+            });
+          }
         });
       }
     });
   } else {
-    res.render("books/search", { searchTerm: null, books: [] });
+    res.render("books/search", { searchTerm: null, books: [], numPages: 0 });
   }
 });
 

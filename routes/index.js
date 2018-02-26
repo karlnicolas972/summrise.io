@@ -3,7 +3,7 @@ var router = express.Router();
 var User = require("../models/user");
 var passport = require("passport");
 var middleware = require("../middleware");
-var defaultPath = "/books/page/1/sort/-views";
+var defaultPath = "/books";
 
 router.get("/", (req, res) => res.render("landing"));
 
