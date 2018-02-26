@@ -30,6 +30,16 @@
 	margin-bottom: -9.9em;
 }
 
+.ui.cards>.card>.content .like.icon.black-hover:hover {
+	color: black;
+}
+
+.ui.cards>.card>.content .like.icon.favourite {
+	color: #ff2733;
+}
+
+
+
 /* CKEditor 5 Styling  */
 
 .ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {

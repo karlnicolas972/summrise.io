@@ -63,6 +63,38 @@ router.post("/search", (req, res) => {
   });
 });
 
+// add to favourites route
+router.get("/favourites/:id", middleware.isLoggedIn, (req, res) => {
+  Book.findById(req.params.id, function(err, foundBook) {
+    if (err || !foundBook) {
+      req.flash("error", "This book doesn't exist!");
+      res.redirect(defaultPath);
+    } else {
+      req.user.favouriteBooks.push(foundBook._id);
+      req.user.save();
+      req.flash("success", `"${foundBook.title}" has been successfully added to your Favourites!`);
+      res.redirect("back");
+    }
+  });
+});
+
+// remove from favourites route
+router.get("/favourites/remove/:id", middleware.isLoggedIn, (req, res) => {
+  Book.findById(req.params.id, function(err, foundBook) {
+    if (err || !foundBook) {
+      req.flash("error", "This book doesn't exist!");
+      res.redirect(defaultPath);
+    } else {
+      var toBeRemoved = req.user.favouriteBooks.indexOf(foundBook._id);
+      req.user.favouriteBooks.splice(toBeRemoved, 1);
+      req.user.save();
+      req.flash("success", `"${foundBook.title}" has been successfully removed from your Favourites!`);
+      res.redirect("back");
+    }
+  });
+});
+
+
 // new route
 router.get("/new", middleware.checkAdmin, (req, res) => {
   Genre.find({}, function(err, foundGenres) {
@@ -238,6 +270,7 @@ router.put("/:id", middleware.checkAdmin, (req, res) => {
   });
 });
 
+// destroy route
 router.delete("/:id", middleware.checkAdmin, (req, res) => {
   Book.findById(req.params.id).populate("genres").exec(function(err, foundBook) {
     if (err || !foundBook) {

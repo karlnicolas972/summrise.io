@@ -3,12 +3,21 @@
     <div class="card">
       <div class="content">
         <div class="ui top pointing right floated dropdown">
-          <i class="like icon"></i>
-          <div class="menu">
-            <div class="item">
-              Add to Favourites
+          <% if (currentUser && currentUser.favouriteBooks.some((favBook) => favBook.equals(book._id))) { %>
+            <i class="favourite like icon"></i>
+            <div class="menu">
+              <a href="/books/favourites/remove/<%= book._id %>" class="item">
+                Remove from Favourites
+              </a>
             </div>
-          </div>
+          <% } else { %>
+            <i class="black-hover like icon"></i>
+            <div class="menu">
+              <a href="/books/favourites/<%= book._id %>" class="item">
+                Add to Favourites
+              </a>
+            </div>
+          <% } %>
         </div>
         <div class="header">
           <%= book.title %>
