@@ -4,6 +4,7 @@ var Book = require("../models/book");
 var BookRequest = require("../models/request");
 var Chapter = require("../models/chapter");
 var Genre = require("../models/genre");
+var User = require("../models/user");
 var middleware = require("../middleware");
 var expressSanitizer = require("express-sanitizer");
 var itemsPerPage = 12;
@@ -296,12 +297,23 @@ router.delete("/:id", middleware.checkAdmin, (req, res) => {
         if (err) {
           defaultError(req, res);
         } else {
-          Book.findByIdAndRemove(req.params.id, function(err) {
+          User.find({ favouriteBooks: foundBook._id }, function(err, foundUser) {
             if (err) {
               defaultError(req, res);
             } else {
-              req.flash("success", `"${foundBook.title}" successfully deleted.`);
-              res.redirect(defaultPath);
+              foundUser.forEach(function(user) {
+                var toBeRemoved = user.favouriteBooks.indexOf(foundBook._id);
+                user.favouriteBooks.splice(toBeRemoved, 1);
+                user.save();
+              });
+              Book.findByIdAndRemove(req.params.id, function(err) {
+                if (err) {
+                  defaultError(req, res);
+                } else {
+                  req.flash("success", `"${foundBook.title}" successfully deleted.`);
+                  res.redirect(defaultPath);
+                }
+              });
             }
           });
         }
