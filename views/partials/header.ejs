@@ -60,12 +60,85 @@
           <% if (currentUser) { %>
             <span class="header item"><i class="user outline icon"></i>User: <%= currentUser.username %> </span>
             <% if (currentUser.isAdmin) { %>
-            <a href="/register" class="header item"><i class="add user icon"></i>Add user</a>
+            <!-- <a href="/register" class="header item"><i class="add user icon"></i>Add user</a> -->
+              <div class="header item">
+                <div class="ui top right pointing dropdown">
+                  <div class="text"><i class="add user icon"></i>Add user</div>
+                    <div class="menu">
+                      <form class="ui login form" action="/register" method="post">
+                        <div class="field">
+                          <label for="username">Username:</label>
+                          <input type="text" name="username"  placeholder="Username">
+                        </div>
+                        <div class="field">
+                          <label for="password">Password:</label>
+                          <input type="password" name="password" placeholder="Password">
+                        </div>
+                        <div class="field">
+                          <div class="ui toggle checkbox">
+                            <input type="checkbox" name="isAdmin" value="true" tabindex="0" class="hidden">
+                            <label for="isAdmin">Add this user as administrator</label>
+                          </div>
+                        </div>
+                        <input class="ui fluid button" type="submit" value="Add user">
+                      </form>
+                      <div class="menu">
+                        <div class="item"><div class="text"><i class="add user icon"></i>Add user</div></div>
+                      </div>
+                    </div>
+                </div>
+              </div>
             <% } %>
             <a href="/logout" class="header item"><i class="remove user icon"></i>Log-out</a>
           <% } else { %>
-            <a class="header item" href="/register"><i class="add user icon"></i>Sign-up</a>
-            <a class="header item" href="/login"><i class="user circle icon"></i>Log-in</a>
+            <!-- <a class="header item" href="/register"><i class="add user icon"></i>Sign-up</a> -->
+            <div class="header item">
+              <div class="ui top right pointing dropdown">
+                <div class="text"><i class="add user icon"></i>Sign Up</div>
+                  <div class="menu">
+                    <form class="ui form" action="/register" method="post">
+                      <div class="field">
+                        <label for="username">Username:</label>
+                        <input type="text" name="username"  placeholder="Username">
+                      </div>
+                      <div class="field">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" placeholder="Password">
+                      </div>
+                      <input class="ui fluid button" type="submit" value="Sign-up!">
+                    </form>
+                    <div class="menu">
+                      <div class="item"><div class="text"><i class="add user icon"></i>Sign Up</div></div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <!-- <a class="header item" href="/login"><i class="user circle icon"></i>Log-in</a> -->
+            <div class="header item">
+              <div class="ui top right pointing dropdown">
+                <div class="text"><i class="user circle icon"></i>Log-in</div>
+                  <div class="menu">
+                    <form class="ui form" action="/login" method="POST">
+                      <div class="field">
+                        <div class="ui left icon input">
+                          <i class="user icon"></i>
+                          <input type="text" name="username" placeholder="Username">
+                        </div>
+                      </div>
+                      <div class="field">
+                        <div class="ui left icon input">
+                          <i class="lock icon"></i>
+                          <input type="password" name="password" placeholder="Password">
+                        </div>
+                      </div>
+                      <button class="ui fluid button">Log-in</button>
+                    </form>
+                    <div class="menu">
+                      <div class="item"><div class="text"><i class="user circle icon"></i>Log-in</div></div>
+                    </div>
+                  </div>
+              </div>
+            </div>
           <% } %>
         </div>
       </div>

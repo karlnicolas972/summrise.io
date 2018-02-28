@@ -3,6 +3,10 @@
 	margin-bottom: 5.0em;
 }
 
+.ui.form {
+	margin: 1rem;
+}
+
 .ui.yellow.buy.button {
 	color: black;
 }
