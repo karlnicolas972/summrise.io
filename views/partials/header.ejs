@@ -65,7 +65,11 @@
                 <div class="ui top right pointing dropdown">
                   <div class="text"><i class="add user icon"></i>Add user</div>
                     <div class="menu">
-                      <form class="ui login form" action="/register" method="post">
+                      <form class="ui login form" action="/register" method="POST">
+                        <div class="field">
+                          <label for="email">Email Address:</label>
+                          <input type="email" name="email" placeholder="email@address.com">
+                        </div>
                         <div class="field">
                           <label for="username">Username:</label>
                           <input type="text" name="username"  placeholder="Username">
@@ -96,7 +100,11 @@
               <div class="ui top right pointing dropdown">
                 <div class="text"><i class="add user icon"></i>Sign Up</div>
                   <div class="menu">
-                    <form class="ui form" action="/register" method="post">
+                    <form class="ui form" action="/register" method="POST">
+                      <div class="field">
+                        <label for="email">Email Address:</label>
+                        <input type="email" name="email" placeholder="email@address.com">
+                      </div>
                       <div class="field">
                         <label for="username">Username:</label>
                         <input type="text" name="username"  placeholder="Username">

@@ -10,17 +10,20 @@ router.get("/", (req, res) => res.render("landing"));
 router.get("/register", (req, res) => res.render("register", { isLoginOrSignupPage: true }));
 
 router.post("/register", (req, res) => {
-  if (req.body.username && req.body.password) {
-    var newUser;
+  if (req.body.username && req.body.password && req.body.email) {
+    var newUser = new User({ username: req.body.username, email: req.body.email });
     if (req.body.isAdmin == null) {
-      newUser = new User({ username: req.body.username, isAdmin: false });
+      newUser.isAdmin = false;
     } else {
-      newUser = new User({ username: req.body.username, isAdmin: true });
+      newUser.isAdmin = true;
     }
     User.register(newUser, req.body.password, function(err, registeredUser) {
-      if (err) {
+      if (err && err.name === "UserExistsError") {
+        req.flash("error", "A user account with the given details already exists. Please try logging in.");
+        res.redirect("/login");
+      } else if (err) {
         req.flash("error", "Something went wrong... Please contact our administrators with information about this error.");
-        res.redirect("register");
+        res.redirect("/register");
       } else {
         if (!req.isAuthenticated()) {
           req.flash("success", "You have been successfully registered. Welcome!")
