@@ -1,3 +1,18 @@
+<div class="ui vertical footer segment">
+  <div class="ui center aligned container">
+    <div class="ui section divider"></div>
+    <div class="ui horizontal large bulleted link list">
+      <a class="item" href="/books">Books</a>
+      <a class="item" href="#">Blog</a>
+      <a class="item" href="/">© 2018 Summrise.io</a>
+      <a class="item" href="#">About</a>
+      <a class="item" href="#">Contact</a>
+    </div>
+    <br>
+    <br>
+  </div>
+</div>
+
 </div> <!-- This closing div is for the pusher div required by the sidebar at the header.ejs file -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
 integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -8,13 +23,7 @@ $('.message .close').on('click', function() {
   $(this).closest('.flash').fadeOut(500);
 });
 $('.ui.checkbox').checkbox();
-$('.ui.dropdown').dropdown();
-// $('form').keypress(function(e) {
-//   if (e.which == 13) { // 13 is enter key
-//     // this.submit();
-//     alert("You have pressed the enter key");
-//   }
-// });
+$('.ui.dropdown').dropdown({ on: "click", action: "nothing" });
 $('.left-sidebar-toggle').on('click', () => $('.ui.left.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle'));
 $('.right-sidebar-toggle').on('click', () => $('.ui.right.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle'));
 $('.top-sidebar-toggle').on('click', () => $('.ui.top.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle'));
@@ -22,7 +31,7 @@ $('.delete-btn').on('click', () => confirm("Are you sure you want to delete this
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js"></script>
 <script>
-    ClassicEditor.create(document.querySelector('.editor')).catch(error => console.error( error ));
+  ClassicEditor.create(document.querySelector('.editor')).catch(error => console.error( error ));
 </script>
 </body>
 </html>
