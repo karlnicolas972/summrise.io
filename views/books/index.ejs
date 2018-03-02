@@ -26,7 +26,8 @@
         <div class="menu">
           <a href="/books?page=<%= currentPage %>&sort=author" class="item">Author</a>
           <a href="/books?page=<%= currentPage %>&sort=title" class="item">Title</a>
-          <a href="/books?page=<%= currentPage %>&sort=-views" class="item">Most Viewed</a>
+          <a href="/books?page=<%= currentPage %>&sort=-views" class="item">Most Views</a>
+          <a href="/books?page=<%= currentPage %>&sort=-numFavourites" class="item">Most Favourites</a>
         </div>
       </div>
       <div class="item ui dropdown">
@@ -47,7 +48,7 @@
       <% } %>
     </div>
   <% } %>
-  
+
   <br>
   <br>
 

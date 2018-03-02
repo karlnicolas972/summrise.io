@@ -90,6 +90,8 @@ router.get("/favourites/:id", middleware.isLoggedIn, (req, res) => {
       req.flash("error", "This book doesn't exist!");
       res.redirect(defaultPath);
     } else {
+      foundBook.numFavourites++;
+      foundBook.save();
       req.user.favouriteBooks.push(foundBook._id);
       req.user.save();
       req.flash("success", `"${foundBook.title}" has been successfully added to your Favourites!`);
@@ -105,6 +107,8 @@ router.get("/favourites/remove/:id", middleware.isLoggedIn, (req, res) => {
       req.flash("error", "This book doesn't exist!");
       res.redirect(defaultPath);
     } else {
+      foundBook.numFavourites--;
+      foundBook.save();
       var toBeRemoved = req.user.favouriteBooks.indexOf(foundBook._id);
       req.user.favouriteBooks.splice(toBeRemoved, 1);
       req.user.save();
@@ -136,6 +140,7 @@ router.post("/new", middleware.checkAdmin, (req, res) => {
       description: req.body.description,
       genres: req.body.genres,
       views: 0,
+      numFavourites: 0,
     };
     Book.create(newBook, function(err, createdBook) {
       if (err) {
@@ -180,6 +185,7 @@ router.post("/new/:request_id", middleware.checkAdmin, (req, res) => {
       description: req.body.description,
       genres: req.body.genres,
       views: 0,
+      numFavourites: 0,
     };
     Book.create(newBook, function(err, createdBook) {
       if (err) {

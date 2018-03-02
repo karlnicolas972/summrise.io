@@ -5,6 +5,7 @@ var bookSchema = new mongoose.Schema({
   author: String,
   description: String,
   views: Number,
+  numFavourites: Number,
   genres: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Genre"
