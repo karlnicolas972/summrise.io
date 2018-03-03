@@ -30,17 +30,19 @@ router.post("/new", middleware.checkAdmin, (req, res) => {
         req.flash("error", "This genre couldn't be created!");
         res.redirect(defaultPath);
       } else {
-        req.body.genre.books.forEach(function(book_id) {
-          Book.findById(book_id, function(err, foundBook) {
-            if (err || !foundBook) {
-              req.flash("error", "This book does not exist!");
-              res.redirect(defaultPath);
-            } else {
-              foundBook.genres.push(createdGenre._id);
-              foundBook.save();
-            }
+        if (req.body.genre.books) {
+          req.body.genre.books.forEach(function(book_id) {
+            Book.findById(book_id, function(err, foundBook) {
+              if (err || !foundBook) {
+                req.flash("error", "This book does not exist!");
+                res.redirect(defaultPath);
+              } else {
+                foundBook.genres.push(createdGenre._id);
+                foundBook.save();
+              }
+            });
           });
-        });
+        }
         req.flash("success", `"${createdGenre.name}" added to the list of genres!`);
         res.redirect("/books/genres/new");
       }

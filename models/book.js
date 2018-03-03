@@ -4,6 +4,7 @@ var bookSchema = new mongoose.Schema({
   title: String,
   author: String,
   description: String,
+  affiliateLink: String,
   views: Number,
   numFavourites: Number,
   genres: [{

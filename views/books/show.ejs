@@ -19,14 +19,18 @@
         <% if (currentUser && currentUser.isAdmin) { %>
           <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
             <a href="/books/<%= book._id %>/edit" class="ui blue button">Edit</a>
-            <a href="#" class="ui yellow buy button">Buy this book!</a>
+            <% if (book.affiliateLink) { %>
+              <a href="<%= book.affiliateLink %>" class="ui yellow buy button">Buy this book!</a>
+            <% } %>
             <a href="/books/<%= book._id %>/chapters/new" class="ui green button">New chapter</a>
             <a href="/books/<%= book._id %>" class="ui teal button">My chapters</a>
             <a href="/books/<%= book._id %>?public=true&page=1&sort=number" class="ui orange button">Public chapters</a>
             <input type="submit" class="ui red button delete-btn" value="Delete">
           </form>
         <% } else { %>
-          <a href="#" class="ui yellow buy button">Buy this book!</a>
+          <% if (book.affiliateLink) { %>
+            <a href="<%= book.affiliateLink %>" class="ui yellow buy button">Buy this book!</a>
+          <% } %>
           <a href="/books/<%= book._id %>/chapters/new" class="ui green button">New chapter</a>
           <a href="/books/<%= book._id %>" class="ui teal button">My chapters</a>
           <a href="/books/<%= book._id %>?public=true&page=1&sort=number" class="ui orange button">Public chapters</a>
@@ -36,7 +40,9 @@
         <% if (currentUser && currentUser.isAdmin) { %>
           <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
             <div class="ui buttons">
-              <a href="#" class="ui yellow buy button">Buy</a>
+              <% if (book.affiliateLink) { %>
+                <a href="<%= book.affiliateLink %>" class="ui yellow buy button">Buy</a>
+              <% } %>
               <a href="/books/<%= book._id %>/chapters/new" class="ui green button">Add</a>
               <a href="/books/<%= book._id %>/edit" class="ui blue button">Edit</a>
               <input type="submit" class="ui red button delete-btn" value="Delete">
@@ -44,7 +50,9 @@
           </form>
         <% } else { %>
           <div class="ui buttons">
-            <a href="#" class="ui yellow buy button">Buy this book</a>
+            <% if (book.affiliateLink) { %>
+              <a href="<%= book.affiliateLink %>" class="ui yellow buy button">Buy this book!</a>
+            <% } %>
             <a href="/books/<%= book._id %>/chapters/new" class="ui green button">New chapter</a>
           </div>
         <% } %>
