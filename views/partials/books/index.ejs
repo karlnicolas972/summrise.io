@@ -1,55 +1,61 @@
 <!-- preconditions: requires books array -->
-<div class="ui doubling stackable four cards">
-  <% books.forEach(function(book) { %>
-    <div class="card">
-      <div class="content">
-        <div class="ui top pointing right floated dropdown">
-          <% if (currentUser && currentUser.favouriteBooks.some((favBook) => favBook.equals(book._id))) { %>
-            <i class="favourite like icon"></i>
-            <div class="menu">
-              <a href="/books/favourites/remove/<%= book._id %>" class="item">
-                Remove from Favourites
-              </a>
-            </div>
-          <% } else { %>
-            <i class="black-hover like icon"></i>
-            <div class="menu">
-              <a href="/books/favourites/<%= book._id %>" class="item">
-                Add to Favourites
-              </a>
+<% if (books && books.length > 0) { %>
+  <div class="ui doubling stackable four cards">
+    <% books.forEach(function(book) { %>
+      <div class="card">
+        <div class="content">
+          <div class="ui top pointing right floated dropdown">
+            <% if (currentUser && currentUser.favouriteBooks.some((favBook) => favBook.equals(book._id))) { %>
+              <i class="favourite like icon"></i>
+              <div class="menu">
+                <a href="/books/favourites/remove/<%= book._id %>" class="item">
+                  Remove from Favourites
+                </a>
+              </div>
+            <% } else { %>
+              <i class="black-hover like icon"></i>
+              <div class="menu">
+                <a href="/books/favourites/<%= book._id %>" class="item">
+                  Add to Favourites
+                </a>
+              </div>
+            <% } %>
+          </div>
+          <a href="/books/<%= book._id %>" class="header">
+            <%= book.title %>
+          </a>
+          <div class="meta">
+            By <%= book.author %>
+          </div>
+          <% if (book.description) { %>
+            <div class="description">
+              <% if (book.description.length > 200) { %>
+                <%- book.description.substring(0, 200) %>...
+              <% } else { %>
+                <%- book.description %>
+              <% } %>
             </div>
           <% } %>
         </div>
-        <a href="/books/<%= book._id %>" class="header">
-          <%= book.title %>
-        </a>
-        <div class="meta">
-          By <%= book.author %>
-        </div>
-        <% if (book.description) { %>
-          <div class="description">
-            <% if (book.description.length > 200) { %>
-              <%- book.description.substring(0, 200) %>...
-            <% } else { %>
-              <%- book.description %>
-            <% } %>
+
+        <% if (currentUser && currentUser.isAdmin) { %>
+          <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
+            <div class="ui three buttons">
+              <a href="/books/<%= book._id %>/edit" class="ui blue basic button">Edit</a>
+              <a href="/books/<%= book._id %>" class="ui basic teal button">View</a>
+              <input type="submit" class="ui red basic button delete-btn" value="Delete">
+            </div>
+          </form>
+        <% } else { %>
+          <div class="extra content">
+            <a class="ui fluid teal button" href="/books/<%= book._id %>">View chapters</a>
           </div>
         <% } %>
       </div>
-
-      <% if (currentUser && currentUser.isAdmin) { %>
-        <form class="extra content" action="/books/<%= book._id %>?_method=DELETE" method="POST">
-          <div class="ui three buttons">
-            <a href="/books/<%= book._id %>/edit" class="ui blue basic button">Edit</a>
-            <a href="/books/<%= book._id %>" class="ui basic teal button">View</a>
-            <input type="submit" class="ui red basic button delete-btn" value="Delete">
-          </div>
-        </form>
-      <% } else { %>
-        <div class="extra content">
-          <a class="ui fluid teal button" href="/books/<%= book._id %>">View chapters</a>
-        </div>
-      <% } %>
-    </div>
-  <% }); %>
-</div>
+    <% }); %>
+  </div>
+<% } else { %>
+  <div class="ui large message">
+    There are currently no books found. To add a specific book, <a href="/books/request">request it here</a> and one of our administrators shall add the book to the database shortly.
+  </div>
+<% } %>

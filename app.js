@@ -9,7 +9,8 @@ var passport = require("passport");
 var LocalStrategy = require("passport-local");
 var expressSanitizer = require("express-sanitizer");
 var port = process.env.PORT || 9720;
-var databaseURL = process.env.DATABASEURL || "mongodb://localhost/summrise";
+// var databaseURL = process.env.DATABASEURL || "mongodb://localhost/summrise";
+var databaseURL = "mongodb://localhost/summrise";
 
 // routes
 var indexRoutes = require("./routes/index");
