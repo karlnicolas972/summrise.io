@@ -5,25 +5,127 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
   <link rel="stylesheet" href="/stylesheets/landing.css">
 </head>
-<body id="for-background">
+<body>
 
-<div class="ui main container">
-	<div id="content">
-    <div class="ui centered grid">
-      <div class="computer only row">
-        <h1 class="wide-header">Summrise.io</h1>
-      </div>
-      <div class="tablet mobile only row">
-        <h1 class="narrow-header">Summrise.io</h1>
-      </div>
+<div class="pusher">
+  <div class="ui vertical masthead center aligned segment">
+    <div class="ui text container">
+      <h1 class="ui header">
+        Summrise.io
+      </h1>
+      <h2>Learn better by creating your own book summaries</h2>
+      <hr>
+      <a href="/books" class="ui huge animated fade teal button" tabindex="0">
+        <div class="visible content">Explore our Library</div>
+        <div class="hidden content">Show me the books!</div>
+      </a>
+      <a href="/register" class="ui huge animated fade teal button" tabindex="0">
+        <div class="visible content">Register Now</div>
+        <div class="hidden content">I want to join!</div>
+      </a>
     </div>
-    <h2>Create Your Own Book Summaries</h2>
-    <hr>
-    <a href="/books" class="ui large animated fade teal button" tabindex="0">
-      <div class="visible content">Get Started Now</div>
-      <div class="hidden content">Show me the books!</div>
-    </a>
-	</div>
+  </div>
+
+  <div class="ui vertical segment">
+    <div class="ui middle aligned stackable grid container">
+
+      <div class="row">
+        <div class="eight wide column">
+          <h3 class="ui header">Get more out of your books</h3>
+          <p>
+            Help yourself remember and understand more of what you're reading. By creating your own summary of a book, your brain actively engages with its contents so that it is able to understand the topic and convey it back using less words.
+          </p>
+        </div>
+        <div class="six wide centered column">
+          <img src="/images/reading-1.jpg" alt="">
+        </div>
+      </div>
+
+      <div class="computer only row">
+        <div class="six wide centered column">
+          <img src="/images/typing.jpeg" alt="">
+        </div>
+        <div class="eight wide right floated column">
+          <h3 class="ui header">Summarise with summrise.io</h3>
+          <p>
+            Summrise.io is created to help you learn. Using our web-based service, you can easily create your own chapter summaries of any books you've read, all organised for you to review once you need it again.
+          </p>
+        </div>
+      </div>
+
+      <div class="mobile tablet only row">
+        <div class="eight wide column">
+          <h3 class="ui header">Summarise with summrise.io</h3>
+          <p>
+            Summrise.io is created to help you learn. Using our web-based service, you can easily create your own chapter summaries of any books you've read, all organised for you to review once you need it again.
+          </p>
+        </div>
+        <div class="six wide centered column">
+          <img src="/images/typing.jpeg" alt="">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="eight wide floated column">
+          <h3 class="ui header">More and more books</h3>
+          <p>
+            Every day we are adding new books to our library so that you have more choices to explore from. If a book doesn't exist in our library, simply request it and our administrators will add it shortly.
+          </p>
+        </div>
+        <div class="six wide centered column">
+          <img src="/images/library.jpeg" alt="">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="ui section divider"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="ui text container">
+            <h1 class="ui centered header">Join Us and Be a Better Learner</h1>
+            <form class="ui large form" method="POST" action="/register">
+              <div class="field">
+                <label for="email">Email Address:</label>
+                <input type="email" name="email" placeholder="email@address.com" required>
+              </div>
+              <div class="field">
+                <label for="username">Username:</label>
+                <input type="text" name="username"  placeholder="Username" required>
+              </div>
+              <div class="field">
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="Password" required>
+              </div>
+              <input class="ui huge center aligned teal button" type="submit" value="Sign-up!">
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="ui center aligned container">
+            <div class="ui section divider"></div>
+            <div class="ui horizontal large bulleted link list">
+              <a class="item" href="/books">Books</a>
+              <a class="item" href="#">Blog</a>
+              <a class="item" href="/">© 2018 Summrise.io</a>
+              <a class="item" href="#">About</a>
+              <a class="item" href="#">Contact</a>
+            </div>
+            <br>
+            <br>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"

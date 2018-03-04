@@ -1,36 +1,61 @@
-html {
-  height: 100%;
-}
-
-body {
+.ui.vertical.masthead.segment {
+  min-height: 700px;
+  padding: 1em 0em;
+  background-color: rgba(209, 197, 185, 1);
   background: url("../images/landing.jpg");
   background-size: cover;
   background-position: center;
-  font-family: 'Lato', sans-serif;
-}
-
-#content {
-	text-align: center;
-	padding: 25%;
-	text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4),
+  text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4),
 				 0px 8px 13px rgba(0, 0, 0, 0.1),
 				 0px 18px 23px rgba(0, 0, 0, 0.1);
+}
+
+.ui.vertical.masthead.segment .button {
+  min-width: 233px;
+}
+
+.masthead.segment .text.container {
   color: white;
 }
 
-
-.wide-header {
-	font-weight: 600;
-	font-size: 5em;
+.masthead.segment .text.container h1.ui.header {
+  color: white;
 }
 
-.narrow-header {
-	font-weight: 600;
-	font-size: 3em;
+.masthead h1.ui.header {
+  margin-top: 3em;
+  margin-bottom: 0em;
+  font-size: 4em;
+  /* font-weight: normal; */
+  font-weight: 500;
+}
+.masthead h2 {
+  font-size: 1.7em;
+  font-weight: normal;
 }
 
-hr {
-	color: white;
-	border-top: 1px solid white;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+img {
+  border-radius: 5px;
+  border: 1px solid black;
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+}
+
+.ui.vertical.segment {
+  padding-top: 8em;
+  padding-left: 0em;
+  padding-right: 0em;
+  padding-bottom: 5em;
+}
+.ui.vertical.segment h3 {
+  font-size: 2em;
+}
+
+.row:not(:first-of-type) {
+  margin-top: 3em;
+}
+
+.ui.vertical.segment p {
+  font-size: 1.33em;
 }
