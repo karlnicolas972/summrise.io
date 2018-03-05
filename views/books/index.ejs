@@ -13,9 +13,14 @@
         <a href="/books/genres/new" class="ui green button"><i class="plus icon"></i>Genre</a>
         <a href="/books/request/all" class="ui teal button">Requests</a>
       </div>
+    <% } else if (currentUser){ %>
+      <p>Here is the collection of books in our library. Want to write a chapter summary for a book that isn't here? Request a new book using the link below.</p>
+      <a href="/books/request" class="ui blue button">Request a new book!</a>
     <% } else { %>
       <p>Here is the collection of books in our library. Want to write a chapter summary for a book that isn't here? Request a new book using the link below.</p>
       <a href="/books/request" class="ui blue button">Request a new book!</a>
+      <a href="/register" class="ui green button">Sign up</a>
+      <a href="/login" class="ui olive button">Log-in</a>
     <% } %>
   </div>
 
