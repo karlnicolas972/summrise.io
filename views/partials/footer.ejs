@@ -25,8 +25,6 @@ $('.message .close').on('click', function() {
 $('.ui.checkbox').checkbox();
 $('.ui.dropdown').dropdown({ on: "click" });
 $('.header.item .ui.dropdown').dropdown({ on: "click", action: "nothing" });
-$('.register-trigger').on('click', () => $('.register-form.ui.dropdown').dropdown({ action: "nothing "}));
-$('.login-trigger').on('click', () => $('.login-form.ui.dropdown').dropdown({ action: "nothing "}));
 $('.left-sidebar-toggle').on('click', () => $('.ui.left.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle'));
 $('.right-sidebar-toggle').on('click', () => $('.ui.right.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle'));
 $('.top-sidebar-toggle').on('click', () => $('.ui.top.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle'));
